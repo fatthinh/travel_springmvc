@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+"http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+
+<tiles-definitions>
+    <definition name="baseLayout" template="/WEB-INF/layout/base.jsp">
+        <put-attribute name="title" value="" type="string"/>
+        <put-attribute name="header" value="/WEB-INF/layout/header.jsp" />
+        <put-attribute name="sidebar" value="/WEB-INF/layout/sidebar.jsp" />
+        <put-attribute name="content" value="" />
+        <put-attribute name="modal" value="" />
+        <put-attribute name="detail" value="" />
+        <put-attribute name="actions" value="" />
+    </definition>
+    <definition name="index" extends="baseLayout">
+        <put-attribute name="title" value="Home" />
+        <put-attribute name="content" value="/WEB-INF/pages/index.jsp" />
+        <put-attribute name="modal" value="/WEB-INF/modals/tour.jsp" />
+    </definition>
+    <definition name="users" extends="baseLayout">
+        <put-attribute name="title" value="Users" />
+        <put-attribute name="content" value="/WEB-INF/pages/users.jsp" />
+        <put-attribute name="modal" value="/WEB-INF/modals/user.jsp" />
+        <put-attribute name="content" value="/WEB-INF/pages/users.jsp" />
+        <put-attribute name="detail" value="/WEB-INF/pages/userDetails.jsp" />
+        <put-attribute name="actions" value="/WEB-INF/actions/user.jsp" />
+    </definition>
+    <!--    <definition name="customers" extends="baseLayout">
+        <put-attribute name="title" value="Customers" />
+        <put-attribute name="content" value="/WEB-INF/pages/customers.jsp" />
+    </definition>
+    <definition name="bookings" extends="baseLayout">
+        <put-attribute name="title" value="Bookings" />
+        <put-attribute name="content" value="/WEB-INF/pages/bookings.jsp" />
+    </definition>
+    <definition name="products" extends="Products">
+        <put-attribute name="title" value="Users" />
+        <put-attribute name="content" value="/WEB-INF/pages/products.jsp" />
+    </definition>
+    <definition name="tickets" extends="baseLayout">
+        <put-attribute name="title" value="Tickets" />
+        <put-attribute name="content" value="/WEB-INF/pages/tickets.jsp" />
+    </definition>-->
+</tiles-definitions>

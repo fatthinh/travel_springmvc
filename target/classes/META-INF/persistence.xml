@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="3.0" xmlns="https://jakarta.ee/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://jakarta.ee/xml/ns/persistence https://jakarta.ee/xml/ns/persistence/persistence_3_0.xsd">
+  <!-- Define Persistence Unit -->
+  <persistence-unit name="my_persistence_unit">
+    <class>com.lpthinh.pojo.Image</class>
+    <class>com.lpthinh.pojo.Booking</class>
+    <class>com.lpthinh.pojo.Invoice</class>
+    <class>com.lpthinh.pojo.Tour</class>
+    <class>com.lpthinh.pojo.Activity</class>
+    <class>com.lpthinh.pojo.News</class>
+    <class>com.lpthinh.pojo.FrontDesk</class>
+    <class>com.lpthinh.pojo.Review</class>
+    <class>com.lpthinh.pojo.TicketType</class>
+    <class>com.lpthinh.pojo.TourDetail</class>
+    <class>com.lpthinh.pojo.TourActivity</class>
+    <class>com.lpthinh.pojo.Ticket</class>
+    <class>com.lpthinh.pojo.Accommodation</class>
+    <class>com.lpthinh.pojo.BillTransaction</class>
+    <class>com.lpthinh.pojo.Customer</class>
+    <class>com.lpthinh.pojo.User</class>
+  </persistence-unit>
+</persistence>
