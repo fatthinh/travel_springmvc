@@ -1,0 +1,236 @@
+.single__page {
+      .single__bio {
+            ul {
+                  border: 0;
+                  li {
+                        border: 1px solid rgba(189, 189, 189, 0.397);
+                        .nav-link {
+                              border: 0;
+                              color: rgb(63, 63, 63);
+                              font-size: 18px;
+                              transition: 0.4s all linear;
+                              border-radius: 0;
+                              height: 100%;
+                              &:hover {
+                                    background-color: var(--brand);
+                                    color: var(--white);
+                              }
+                        }
+                        .active {
+                              background-color: var(--brand) !important;
+                              color: var(--white);
+                              border: none;
+                              border-radius: 0;
+                        }
+                  }
+            }
+      }
+      .tour__info {
+            .price {
+                  h2 {
+                        font-size: 35px;
+                        del {
+                              font-size: 18px;
+                              font-weight: 400;
+                              font-family: var(--para__font);
+                              color: gray;
+                        }
+                  }
+                  p {
+                        color: gray;
+                  }
+            }
+            .day__time {
+                  p {
+                        display: flex;
+                        align-items: center;
+                        gap: 10px;
+                        i {
+                              color: var(--brand);
+                        }
+                  }
+            }
+            .desc {
+                  p {
+                        color: var(--black);
+                        line-height: 26px;
+                  }
+            }
+
+            .short__list {
+                  border: 1px solid rgba(165, 165, 165, 0.39);
+                  padding: 20px;
+                  ul {
+                        li {
+                              border: none;
+                              padding: 10px 0;
+                              h4 {
+                                    margin-bottom: 0;
+                                    width: 40%;
+                                    font-size: 16px;
+                              }
+                              p {
+                                    color: rgb(99, 99, 99);
+                              }
+                        }
+                  }
+            }
+            .include {
+                  border: 1px solid rgba(165, 165, 165, 0.39);
+                  padding: 20px;
+                  justify-content: space-between;
+                  h4 {
+                        font-size: 16px;
+                  }
+                  .include__items {
+                        width: 60%;
+                        // ul {
+                        // 	display: flex;
+                        // 	flex-wrap: wrap;
+                        // }
+                        li {
+                              width: 50%;
+                              padding: 10px 0;
+                              border: none;
+                              i {
+                                    color: var(--brand);
+                              }
+                        }
+                  }
+            }
+            .exclude {
+                  @extend .include;
+            }
+      }
+      .plan__sec {
+            .plan__con {
+                  border-bottom: 1px solid rgba(165, 165, 165, 0.356);
+                  &:hover {
+                        .plan__sn {
+                              p {
+                                    background-color: var(--brand);
+                                    color: var(--white);
+                              }
+                        }
+                  }
+            }
+            .plan__sn {
+                  p {
+                        color: var(--brand);
+                        display: grid;
+                        place-items: center;
+                        font-size: 32px;
+                        font-weight: 500;
+                        height: 60px;
+                        width: 60px;
+                        border: 1px solid var(--brand);
+                        transition: 0.3s all linear;
+                  }
+            }
+            .plan__box {
+                  font-size: 17px;
+                  line-height: 29px;
+                  li {
+                        border: none;
+                        padding: 8px 0;
+                        i {
+                              color: var(--brand);
+                        }
+                  }
+            }
+      }
+      .booking__card {
+            box-shadow: 1px 1px 20px 1px rgba(168, 168, 168, 0.13);
+            .heading {
+                  border-bottom: 1px solid rgba(179, 179, 179, 0.356);
+            }
+            .check {
+                  p:nth-child(1) {
+                        color: rgb(110, 110, 110);
+                        font-weight: 600;
+                  }
+                  p:nth-child(2) {
+                        font-size: 15px;
+                  }
+            }
+            .check__con {
+                  border-bottom: 1px solid rgba(179, 179, 179, 0.356);
+
+                  i {
+                        color: var(--brand);
+                  }
+            }
+            .price__main {
+                  border-bottom: 1px solid rgba(179, 179, 179, 0.356);
+            }
+            .price__con {
+                  .price {
+                        p {
+                              font-size: 18px;
+                              font-weight: 500;
+                              del {
+                                    font-size: 16px;
+                                    font-weight: 400;
+                                    color: rgb(116, 116, 116);
+                              }
+                        }
+                  }
+                  .counter {
+                        border: 1px solid rgba(172, 172, 172, 0.575);
+                        padding: 8px 18px;
+                        border-radius: 36px;
+                        background-color: var(--bg);
+                        a {
+                              cursor: pointer;
+                              // border-radius: 50%;
+                              // background-color: var(--brand);
+
+                              &:hover {
+                                    i {
+                                          background-color: var(--brand);
+                                          color: var(--white);
+                                    }
+                              }
+                        }
+                        svg {
+                              color: var(--brand);
+                              // background-color: red;
+                              padding: 0;
+                              font-size: 24px;
+                              height: 24px;
+                              width: 24px;
+                              display: grid;
+                              place-items: center;
+                              border-radius: 50%;
+                              transition: 0.4s all linear;
+                        }
+                  }
+            }
+            .total__con {
+                  p {
+                        font-size: 18px;
+                        font-weight: 500;
+                        color: rgb(88, 88, 88);
+                        span {
+                              color: rgb(53, 53, 53);
+                              font-size: 24px;
+                              font-weight: 600;
+                        }
+                  }
+            }
+      }
+}
+
+@media (max-width: 767px) {
+      .short__list {
+            h4 {
+                  width: 100% !important;
+            }
+      }
+      .include__items {
+            width: 100% !important;
+            li {
+                  width: 100% !important;
+            }
+      }
+}

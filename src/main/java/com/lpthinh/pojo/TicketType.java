@@ -5,7 +5,7 @@
 package com.lpthinh.pojo;
 
 import java.io.Serializable;
-import java.util.Set;
+import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -54,7 +54,7 @@ public class TicketType implements Serializable {
     @Column(name = "deduction")
     private Float deduction;
     @OneToMany(mappedBy = "ticketType")
-    private Set<Ticket> ticketSet;
+    private Collection<Ticket> ticketCollection;
 
     public TicketType() {
     }
@@ -101,12 +101,12 @@ public class TicketType implements Serializable {
     }
 
     @XmlTransient
-    public Set<Ticket> getTicketSet() {
-        return ticketSet;
+    public Collection<Ticket> getTicketCollection() {
+        return ticketCollection;
     }
 
-    public void setTicketSet(Set<Ticket> ticketSet) {
-        this.ticketSet = ticketSet;
+    public void setTicketCollection(Collection<Ticket> ticketCollection) {
+        this.ticketCollection = ticketCollection;
     }
 
     @Override

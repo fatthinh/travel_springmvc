@@ -1,0 +1,290 @@
+.tour__page {
+      background-color: var(--bg);
+      .tour__left {
+            // background-color: gray;
+            h2 {
+                  font-size: 24px;
+            }
+            .form__con {
+                  .form {
+                        border: 1px solid rgba(201, 201, 201, 0.459);
+                  }
+                  .form button {
+                        border: none;
+                        background: none;
+                        color: #8b8ba7;
+                  }
+
+                  .form {
+                        --timing: 0.3s;
+                        --width-of-input: 200px;
+                        --height-of-input: 50px;
+                        --border-height: 2px;
+                        --input-bg: #fff;
+                        --border-color: #2f2ee9;
+                        --border-radius: 30px;
+                        --after-border-radius: 1px;
+                        position: relative;
+                        height: var(--height-of-input);
+                        display: flex;
+                        align-items: center;
+                        padding-inline: 0.8em;
+                        transition: border-radius 0.5s ease;
+                        background: var(--input-bg, #fff);
+                  }
+
+                  .input {
+                        font-size: 1.1rem;
+                        background-color: transparent;
+                        width: 100%;
+                        height: 100%;
+                        padding-inline: 0.5em;
+                        padding-block: 0.7em;
+                        border: none;
+                        transition: 0.6s all linear;
+                        &:focus {
+                              &::placeholder {
+                                    color: var(--brand);
+                              }
+                        }
+                  }
+
+                  .form:before {
+                        content: '';
+                        position: absolute;
+                        background: var(--brand);
+                        transform: scaleX(0);
+                        transform-origin: center;
+                        width: 100%;
+                        height: var(--border-height);
+                        left: 0;
+                        bottom: 0;
+                        border-radius: 1px;
+                        transition: transform var(--timing) ease;
+                  }
+
+                  input:focus {
+                        outline: none;
+                  }
+
+                  .form:focus-within:before {
+                        transform: scale(1);
+                  }
+
+                  .reset {
+                        border: none;
+                        background: none;
+                        opacity: 0;
+                        visibility: hidden;
+                  }
+
+                  input:not(:placeholder-shown) ~ .reset {
+                        opacity: 1;
+                        visibility: visible;
+                  }
+
+                  .form svg {
+                        width: 17px;
+                        margin-top: 3px;
+                  }
+            }
+            .price__range {
+                  padding: 16px;
+                  border: 1px solid rgba(201, 201, 201, 0.459);
+                  .price__slider {
+                        padding: 8px 14px;
+                        .css-187mznn-MuiSlider-root {
+                              color: var(--brand);
+                        }
+                        .css-nnid7-MuiSlider-valueLabel {
+                              background-color: var(--brand);
+                        }
+                  }
+            }
+            .tour__type {
+                  border: 1px solid rgba(201, 201, 201, 0.459);
+                  padding: 16px;
+                  .form-check-input {
+                        border-color: #8b8ba7;
+                        border-radius: 0;
+                        cursor: pointer;
+                        &:focus {
+                              box-shadow: none;
+                        }
+                  }
+                  .form-check-label {
+                        color: #40404b;
+                        font-weight: 500;
+                  }
+                  .form-check-input.is-valid:checked {
+                        background-color: var(--brand);
+                  }
+            }
+            .select__desc {
+                  padding: 16px;
+                  border: 1px solid rgba(201, 201, 201, 0.459);
+                  .selection {
+                        .dropdown {
+                              width: 100%;
+                              border: 1px solid rgba(201, 201, 201, 0.459);
+                              button {
+                                    color: #40404b;
+                                    width: 100%;
+                                    background-color: transparent;
+                                    border: none;
+                                    text-align: start;
+                                    font-weight: 500;
+                                    &::after {
+                                          position: absolute;
+                                          right: 5%;
+                                          top: 50%;
+                                          transition: 0.6s all;
+                                    }
+                                    &:active {
+                                          background-color: transparent;
+                                          color: var(--black);
+                                    }
+                              }
+                              .dropdown-menu {
+                                    width: 100%;
+                                    border-radius: 0;
+                                    animation: opacity 0.4s linear;
+                                    &:active {
+                                          animation: sopacity 0.4s linear;
+                                    }
+                                    a {
+                                          color: var(--black);
+                                          transition: 0.3s;
+                                          &:hover {
+                                                background-color: var(--brand);
+                                                color: var(--white);
+                                          }
+                                    }
+                              }
+                              .show {
+                                    &::after {
+                                          transform: rotateX(3.142rad);
+                                    }
+                              }
+                        }
+                  }
+            }
+            .reset__filter {
+                  .find__now {
+                        background-color: var(--brand);
+                        width: 100%;
+                        .label {
+                              color: var(--white);
+                        }
+                        .transition {
+                              background-color: var(--white);
+                        }
+                        &:hover {
+                              .transition {
+                                    width: 25em;
+                                    height: 25em;
+                              }
+                              .label {
+                                    color: var(--brand);
+                              }
+                        }
+                  }
+            }
+            .filter__mobile {
+                  .accordion-item:last-of-type {
+                        border-bottom-right-radius: 0 !important;
+                        border-bottom-left-radius: 0 !important;
+                  }
+                  .accordion-item:first-of-type {
+                        border-bottom-right-radius: 0 !important;
+                        border-bottom-left-radius: 0 !important;
+                  }
+                  .accordion-item:first-of-type {
+                        border-top-left-radius: 0;
+                        border-top-right-radius: 0;
+                  }
+                  .accordion-item {
+                        border: 0;
+                  }
+                  .accordion-button {
+                        border-radius: 0;
+                        font-size: 16px;
+                        font-family: var(--para__font);
+                  }
+                  .accordion-body {
+                        padding: 16px 16px;
+                        background-color: var(--bg);
+                        margin-bottom: 16px;
+                  }
+                  button:focus:not(:focus-visible) {
+                        outline: 0;
+                  }
+                  .accordion-button:focus {
+                        z-index: 3;
+                        border-color: gray;
+                        outline: 0;
+                        box-shadow: none;
+                  }
+                  .accordion-button:not(.collapsed) {
+                        color: var(--brand);
+                        background-color: var(--white);
+                        box-shadow: none;
+                  }
+                  .accordion-button:not(.collapsed)::after {
+                        background-image: url('data:image/svg+xml,%3csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 16 16%27 fill=%27%23212529%27%3e%3cpath fill-rule=%27evenodd%27 d=%27M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z%27/%3e%3c/svg%3e');
+                        transform: var(--bs-accordion-btn-icon-transform);
+                  }
+            }
+      }
+      .tour__right {
+            .card__con {
+                  background-color: var(--white);
+                  box-shadow: 0px 14px 20px -14px rgb(218, 218, 218);
+                  .right__card {
+                        h2 {
+                              font-size: 24px;
+                        }
+                        p {
+                              color: #767677;
+                              font-weight: 600;
+                              font-size: 18px;
+                              line-height: 46px;
+                              del {
+                                    font-size: 16px;
+                              }
+                        }
+                        h4 {
+                              font-size: 22px;
+                              line-height: 46px;
+                        }
+                        ul {
+                              li {
+                                    font-size: 18px;
+                                    color: #767677;
+                                    display: flex;
+                                    align-items: center;
+                                    gap: 10px;
+                                    i {
+                                          color: var(--brand);
+                                    }
+                              }
+                        }
+                  }
+                  .left__card {
+                        overflow: hidden;
+                        img {
+                              height: 100%;
+                              object-fit: cover;
+                              transition: 0.6s all linear;
+                        }
+                  }
+                  &:hover {
+                        .left__card {
+                              img {
+                                    transform: scale(1.1);
+                              }
+                        }
+                  }
+            }
+      }
+}

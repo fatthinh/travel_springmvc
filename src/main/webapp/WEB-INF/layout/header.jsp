@@ -7,9 +7,9 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <div class="app-content-header">
     <h1 class="app-content-headerText">${headerTitle}</h1>
-    <button class="mode-switch" title="Switch Theme">
+<!--    <button class="mode-switch" title="Switch Theme">
         <i class="bx bxs-moon icon"></i>
-    </button>
+    </button>-->
     <button
         class="app-content-headerButton js-toggle"
         toggle-target=${addNewBtn}

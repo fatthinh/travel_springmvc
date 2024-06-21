@@ -14,9 +14,13 @@
     <class>com.lpthinh.pojo.TourDetail</class>
     <class>com.lpthinh.pojo.TourActivity</class>
     <class>com.lpthinh.pojo.Ticket</class>
-    <class>com.lpthinh.pojo.Accommodation</class>
     <class>com.lpthinh.pojo.BillTransaction</class>
     <class>com.lpthinh.pojo.Customer</class>
     <class>com.lpthinh.pojo.User</class>
+    <class>com.lpthinh.pojo.TourProduct</class>
+    <class>com.lpthinh.pojo.Product</class>
+    <class>com.lpthinh.pojo.Blog</class>
+    <class>com.lpthinh.pojo.Category</class>
+    <class>com.lpthinh.pojo.Destination</class>
   </persistence-unit>
 </persistence>

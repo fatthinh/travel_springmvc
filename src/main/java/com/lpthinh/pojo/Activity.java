@@ -4,18 +4,18 @@
  */
 package com.lpthinh.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
-import java.util.Set;
+import java.util.Collection;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
+import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -34,39 +34,23 @@ import javax.xml.bind.annotation.XmlTransient;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Activity.findAll", query = "SELECT a FROM Activity a"),
-    @NamedQuery(name = "Activity.findByPrice", query = "SELECT a FROM Activity a WHERE a.price = :price"),
-    @NamedQuery(name = "Activity.findByDescription", query = "SELECT a FROM Activity a WHERE a.description = :description"),
-    @NamedQuery(name = "Activity.findByDuration", query = "SELECT a FROM Activity a WHERE a.duration = :duration"),
     @NamedQuery(name = "Activity.findByTransport", query = "SELECT a FROM Activity a WHERE a.transport = :transport"),
-    @NamedQuery(name = "Activity.findByDepartureFrom", query = "SELECT a FROM Activity a WHERE a.departureFrom = :departureFrom"),
-    @NamedQuery(name = "Activity.findByDepartureTo", query = "SELECT a FROM Activity a WHERE a.departureTo = :departureTo"),
+    @NamedQuery(name = "Activity.findByPrice", query = "SELECT a FROM Activity a WHERE a.price = :price"),
     @NamedQuery(name = "Activity.findById", query = "SELECT a FROM Activity a WHERE a.id = :id"),
     @NamedQuery(name = "Activity.findByName", query = "SELECT a FROM Activity a WHERE a.name = :name")})
 public class Activity implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "price")
-    private double price;
-    @Size(max = 255)
+    @Lob
+    @Size(max = 65535)
     @Column(name = "description")
     private String description;
-    @Column(name = "duration")
-    private Integer duration;
     @Size(max = 9)
     @Column(name = "transport")
     private String transport;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 30)
-    @Column(name = "departure_from")
-    private String departureFrom;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 30)
-    @Column(name = "departure_to")
-    private String departureTo;
+    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
+    @Column(name = "price")
+    private Double price;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
@@ -77,13 +61,12 @@ public class Activity implements Serializable {
     @Size(min = 1, max = 100)
     @Column(name = "name")
     private String name;
-    @JoinTable(name = "activity_image", joinColumns = {
-        @JoinColumn(name = "activity_id", referencedColumnName = "id")}, inverseJoinColumns = {
-        @JoinColumn(name = "image_id", referencedColumnName = "id")})
-    @ManyToMany
-    private Set<Image> imageSet;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "activity")
-    private Set<TourActivity> tourActivitySet;
+    @JoinColumn(name = "destination", referencedColumnName = "id")
+    @ManyToOne
+    private Destination destination;
+    @OneToMany(mappedBy = "activityId")
+    @JsonIgnore
+    private Collection<TourActivity> tourActivityCollection;
 
     public Activity() {
     }
@@ -92,20 +75,9 @@ public class Activity implements Serializable {
         this.id = id;
     }
 
-    public Activity(Integer id, double price, String departureFrom, String departureTo, String name) {
+    public Activity(Integer id, String name) {
         this.id = id;
-        this.price = price;
-        this.departureFrom = departureFrom;
-        this.departureTo = departureTo;
         this.name = name;
-    }
-
-    public double getPrice() {
-        return price;
-    }
-
-    public void setPrice(double price) {
-        this.price = price;
     }
 
     public String getDescription() {
@@ -116,14 +88,6 @@ public class Activity implements Serializable {
         this.description = description;
     }
 
-    public Integer getDuration() {
-        return duration;
-    }
-
-    public void setDuration(Integer duration) {
-        this.duration = duration;
-    }
-
     public String getTransport() {
         return transport;
     }
@@ -132,20 +96,12 @@ public class Activity implements Serializable {
         this.transport = transport;
     }
 
-    public String getDepartureFrom() {
-        return departureFrom;
+    public Double getPrice() {
+        return price;
     }
 
-    public void setDepartureFrom(String departureFrom) {
-        this.departureFrom = departureFrom;
-    }
-
-    public String getDepartureTo() {
-        return departureTo;
-    }
-
-    public void setDepartureTo(String departureTo) {
-        this.departureTo = departureTo;
+    public void setPrice(Double price) {
+        this.price = price;
     }
 
     public Integer getId() {
@@ -164,22 +120,21 @@ public class Activity implements Serializable {
         this.name = name;
     }
 
+    public Destination getDestination() {
+        return destination;
+    }
+
+    public void setDestination(Destination destination) {
+        this.destination = destination;
+    }
+
     @XmlTransient
-    public Set<Image> getImageSet() {
-        return imageSet;
+    public Collection<TourActivity> getTourActivityCollection() {
+        return tourActivityCollection;
     }
 
-    public void setImageSet(Set<Image> imageSet) {
-        this.imageSet = imageSet;
-    }
-
-    @XmlTransient
-    public Set<TourActivity> getTourActivitySet() {
-        return tourActivitySet;
-    }
-
-    public void setTourActivitySet(Set<TourActivity> tourActivitySet) {
-        this.tourActivitySet = tourActivitySet;
+    public void setTourActivityCollection(Collection<TourActivity> tourActivityCollection) {
+        this.tourActivityCollection = tourActivityCollection;
     }
 
     @Override

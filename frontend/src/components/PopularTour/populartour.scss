@@ -1,0 +1,59 @@
+.popular__tour {
+      // height: 200px;
+
+      .content {
+            .col__con {
+                  // background-color: $white;
+                  cursor: pointer;
+                  padding-top: 10px;
+                  padding-bottom: 10px;
+
+                  p {
+                        font-size: 21px;
+                        padding: 20px 0px;
+                        font-weight: 700;
+                  }
+                  .inner__con {
+                        background-color: var(--white);
+                        box-shadow: 1px 1px 20px 1px rgba(168, 168, 168, 0.13);
+                        height: 100%;
+                        width: 100%;
+                        display: flex;
+                        padding: 30px 0 0 0;
+                        justify-content: center;
+                        align-items: center;
+                        flex-direction: column;
+                  }
+                  .svg__con {
+                        // background-color: red;
+                        padding: 20px;
+                        border-radius: 50%;
+                        border: 1px solid rgba(128 128 128 / 10%);
+                        position: relative;
+                        overflow: hidden;
+                        &::after {
+                              content: '';
+                              position: absolute;
+                              background-color: #99ee2233;
+                              top: 50%;
+                              left: 50%;
+                              transform: translate(-50%, -50%);
+                              border-radius: 50%;
+                              height: 0;
+                              width: 0;
+                              opacity: 0;
+                              transition: 0.6s all linear;
+                        }
+                  }
+                  &:hover {
+                        div {
+                              &::after {
+                                    height: 100px;
+                                    width: 100px;
+                                    opacity: 1;
+                              }
+                        }
+                  }
+            }
+      }
+}

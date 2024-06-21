@@ -11,7 +11,6 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -52,6 +51,7 @@ public class UserController {
 
     @RequestMapping(path = "/users", method = RequestMethod.POST)
     public String users(Model model, @RequestParam Map<String, String> params, @ModelAttribute(value = "user") @Valid User user) {
+        
         model.addAttribute("users", this.userService.getUsers(params));
         if (!params.containsKey("page")) {
             params.put("page", "1");

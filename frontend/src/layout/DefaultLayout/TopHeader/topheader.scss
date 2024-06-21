@@ -1,0 +1,15 @@
+.top__header__sec {
+      background-color: var(--blue);
+      color: var(--white);
+      .row {
+            height: 35px;
+            a,
+            p {
+                  font-size: 12px;
+            }
+            i {
+                  font-size: 12px;
+                  color: var(--brand);
+            }
+      }
+}

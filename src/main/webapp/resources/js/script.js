@@ -152,7 +152,6 @@ const $$ = document.querySelectorAll.bind(document);
  * <button class="js-toggle" toggle-target="#box">Click</button>
  * <div id="box">Content show/hide</div>
  */
-window.addEventListener("DOMContentLoaded", initJsToggle);
 
 function initJsToggle() {
     $$(".js-toggle").forEach((button) => {
@@ -260,6 +259,8 @@ function initJsToggle() {
  * jsFilter
  */
 document.addEventListener("DOMContentLoaded", function () {
+    initJsToggle();
+
     document.querySelector(".jsFilter").addEventListener("click", function () {
         document.querySelector(".filter-menu").classList.toggle("active");
     });
@@ -280,12 +281,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 .querySelector(".products-area-wrapper")
                 .classList.remove("gridView");
         document.querySelector(".products-area-wrapper").classList.add("tableView");
-    });
-
-    var modeSwitch = document.querySelector(".mode-switch");
-    modeSwitch.addEventListener("click", function () {
-        document.documentElement.classList.toggle("dark");
-        modeSwitch.classList.toggle("active");
     });
 
 //    const moreBtn = $(".js-more-passenger");
@@ -334,7 +329,6 @@ document.addEventListener("DOMContentLoaded", function () {
 //        passengers.innerHTML = liTags;
 //    };
 });
-
 // Delegate the click event handling to a parent element
 //document.addEventListener("click", function (event) {
 //    event.preventDefault();

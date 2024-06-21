@@ -1,0 +1,261 @@
+.hero__sec {
+      overflow: hidden;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+
+      .banner__plane {
+            position: absolute;
+            top: 5%;
+            left: -20%;
+            animation: fly 20s linear 0s infinite reverse;
+
+            img {
+                  width: 90px;
+                  opacity: 0.6;
+            }
+      }
+      .cloud__one {
+            position: absolute;
+            top: 12%;
+            left: 15%;
+            opacity: 0.6;
+      }
+      .cloud__two {
+            position: absolute;
+            top: 12%;
+            left: 47%;
+            opacity: 0.6;
+      }
+      .left__hero {
+            position: absolute;
+            left: 10%;
+            height: 450px;
+            animation: updown 4s linear infinite alternate-reverse;
+            img {
+                  height: 100%;
+            }
+      }
+      .right__hero {
+            position: absolute;
+            right: 2%;
+            width: 350px;
+            img {
+                  width: 100%;
+            }
+            .round {
+                  position: absolute;
+                  left: -25%;
+                  bottom: 10%;
+                  border-radius: 50%;
+                  border: 13px solid var(--white);
+                  width: 180px;
+            }
+      }
+      .content {
+            width: 600px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            &::before {
+                  content: '';
+                  position: absolute;
+                  bottom: 10%;
+                  left: 30%;
+                  background-image: url('../../../public/assets/images/fly-shape2.svg');
+                  background-repeat: no-repeat;
+                  background-position: center;
+                  height: 100px;
+                  width: 200px;
+            }
+            p:nth-child(1) {
+                  color: var(--brand);
+                  font-size: 22px;
+                  line-height: 46px;
+                  position: relative;
+                  &::after {
+                        content: '';
+                        position: absolute;
+                        top: -50%;
+                        background-image: url('../../../public/assets/images/fly-shape1.svg');
+                        background-repeat: no-repeat;
+                        background-position: center;
+                        height: 100px;
+                        width: 100px;
+                  }
+            }
+            h1 {
+                  font-size: 56px;
+                  text-align: center;
+                  line-height: 84px;
+                  position: relative;
+                  &::after {
+                        content: '';
+                        position: absolute;
+                        top: -10%;
+                        right: -10%;
+                        background-image: url('../../../public/assets/images/banner-dot-vector.svg');
+                        background-repeat: no-repeat;
+                        background-position: center;
+                        height: 100px;
+                        width: 100px;
+                  }
+            }
+            p:nth-child(3) {
+                  font-size: 22px;
+                  color: #5e5e5e;
+                  line-height: 37px;
+                  padding-bottom: 48px;
+                  padding-top: 18px;
+                  text-align: center;
+            }
+            button {
+                  background-color: var(--brand);
+                  border-color: var(--brand);
+                  border-radius: 0;
+                  padding: 1em 2.7em;
+                  color: var(--white);
+                  position: relative;
+                  overflow: hidden;
+
+                  .label {
+                        font-family: var(--para__font);
+                        position: relative;
+                        font-size: 18px;
+                        font-weight: 500;
+                        top: -1px;
+                  }
+                  .transition {
+                        transition-timing-function: cubic-bezier(0, 0, 0.2, 1);
+                        transition-duration: 0.8s;
+                        background-color: var(--white);
+                        border-radius: 9999px;
+                        width: 0;
+                        height: 0;
+                        position: absolute;
+                        left: 50%;
+                        top: 50%;
+                        transform: translate(-50%, -50%);
+                  }
+                  &:hover {
+                        .transition {
+                              height: 14em;
+                              width: 14em;
+                        }
+                        .label {
+                              color: var(--brand);
+                        }
+                  }
+                  &:active {
+                        transform: scale(0.97);
+                  }
+            }
+      }
+}
+@keyframes fly {
+      0% {
+            left: 110%;
+      }
+      100% {
+            left: -20%;
+      }
+}
+@keyframes updown {
+      0% {
+            top: 35%;
+      }
+      100% {
+            top: 30%;
+      }
+}
+
+@media (max-width: 1405px) {
+      .hero__sec {
+            .right__hero {
+                  width: 300px !important;
+                  // background-color: red;
+                  top: 20% !important;
+            }
+            .content {
+                  width: 500px !important;
+                  h1 {
+                        font-size: 46px !important;
+                  }
+            }
+            .left__hero {
+                  top: 20% !important;
+            }
+      }
+}
+
+@media (max-width: 1247px) {
+      .hero__sec {
+            .content {
+                  z-index: 1;
+                  h1 {
+                        font-size: 36px !important;
+                        line-height: 66px !important;
+                  }
+            }
+            .left__hero {
+                  height: 350px !important;
+                  top: 35% !important;
+                  left: 5% !important;
+            }
+            .right__hero {
+                  width: 250px !important;
+                  bottom: 0% !important;
+                  right: 0% !important;
+                  .round {
+                        width: 140px !important;
+                        bottom: 30% !important;
+                  }
+            }
+      }
+}
+@media (max-width: 991px) {
+      .hero__sec {
+            background-color: rgb(0 0 0 / 82%);
+            .left__hero {
+                  display: none;
+            }
+            .right__hero {
+                  display: none;
+            }
+
+            .content {
+                  width: 600px !important;
+                  &::before {
+                        left: 15% !important;
+                  }
+                  p:nth-child(1) {
+                        font-size: 18px !important;
+                  }
+                  h1 {
+                        color: var(--white) !important;
+                        font-size: 48px !important;
+                        line-height: 84px !important;
+                  }
+                  p:nth-child(3) {
+                        color: var(--white) !important;
+                        padding-top: 0px !important;
+                        padding-bottom: 24px !important;
+                        font-size: 16px !important;
+                  }
+            }
+      }
+}
+
+@media (max-width: 576px) {
+      .hero__sec {
+            .content {
+                  h1 {
+                        font-size: 36px !important;
+                        line-height: 56px !important;
+                  }
+            }
+      }
+}

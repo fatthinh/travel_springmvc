@@ -22,25 +22,25 @@
             </a>
         </li>
         <li class="sidebar-list-item">
-            <a href="<c:url value="/bookings" />">
-                <i class="bx bx-briefcase-alt"></i> <span>Bookings</span>
-            </a>
-        </li>
-        <li class="sidebar-list-item active">
-            <a href="<c:url value="/" />">
-                <i class="bx bx-world"></i>
+            <a href="<c:url value="/tours" />">
+                <i class='bx bx-map-alt'></i>
                 <span>Tours</span>
             </a>
         </li>
         <li class="sidebar-list-item">
-            <a href="<c:url value="/products" />">
-                <i class="bx bx-time-five"></i>
-                <span>Products</span>
+            <a href="<c:url value="/activities" />">
+                <i class="bx bx-world"></i></i> <span>Activities</span>
             </a>
         </li>
         <li class="sidebar-list-item">
-            <a href="<c:url value="/tickets" />">
-                <i class="bx bx-map-alt"></i> <span>Tickets</span>
+            <a href="<c:url value="/destinations" />">
+                <i class='bx bx-map'></i> <span>Destinations</span>
+            </a>
+        </li>
+        <li class="sidebar-list-item">
+            <a href="<c:url value="/bookings" />">
+                <i class="bx bx-time-five"></i>
+                <span>Bookings</span>
             </a>
         </li>
         <li class="sidebar-list-item">
@@ -48,7 +48,7 @@
                 <i class="bx bx-user"></i> <span>Customers</span>
             </a>
         </li>
-        <li class="sidebar-list-item active">
+        <li class="sidebar-list-item">
             <a href="<c:url value="/users" />">
                 <i class="bx bxs-user-account"></i><span>users</span>
             </a>

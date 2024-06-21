@@ -37,11 +37,5 @@
                 </div>
             </form>
         </div>
-        <button class="action-button list active" title="List View">
-            <i class="bx bx-list-ul icon"></i>
-        </button>
-        <button class="action-button grid" title="Grid View">
-            <i class="bx bx-grid-alt icon"></i>
-        </button>
     </div>
 </div>

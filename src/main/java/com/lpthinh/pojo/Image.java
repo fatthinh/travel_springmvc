@@ -4,8 +4,9 @@
  */
 package com.lpthinh.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
-import java.util.Set;
+import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,7 +16,6 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -52,12 +52,15 @@ public class Image implements Serializable {
     @Size(min = 1, max = 100)
     @Column(name = "name")
     private String name;
-    @ManyToMany(mappedBy = "imageSet")
-    private Set<Activity> activitySet;
-    @OneToMany(mappedBy = "image")
-    private Set<News> newsSet;
-    @OneToMany(mappedBy = "image")
-    private Set<TourDetail> tourDetailSet;
+    @ManyToMany(mappedBy = "imageCollection")
+    @JsonIgnore
+    private Collection<Blog> blogCollection;
+    @ManyToMany(mappedBy = "imageCollection")
+    @JsonIgnore
+    private Collection<TourDetail> tourDetailCollection;
+    @ManyToMany(mappedBy = "imageCollection")
+    @JsonIgnore
+    private Collection<Destination> destinationCollection;
 
     public Image() {
     }
@@ -97,30 +100,30 @@ public class Image implements Serializable {
     }
 
     @XmlTransient
-    public Set<Activity> getActivitySet() {
-        return activitySet;
+    public Collection<Blog> getBlogCollection() {
+        return blogCollection;
     }
 
-    public void setActivitySet(Set<Activity> activitySet) {
-        this.activitySet = activitySet;
-    }
-
-    @XmlTransient
-    public Set<News> getNewsSet() {
-        return newsSet;
-    }
-
-    public void setNewsSet(Set<News> newsSet) {
-        this.newsSet = newsSet;
+    public void setBlogCollection(Collection<Blog> blogCollection) {
+        this.blogCollection = blogCollection;
     }
 
     @XmlTransient
-    public Set<TourDetail> getTourDetailSet() {
-        return tourDetailSet;
+    public Collection<TourDetail> getTourDetailCollection() {
+        return tourDetailCollection;
     }
 
-    public void setTourDetailSet(Set<TourDetail> tourDetailSet) {
-        this.tourDetailSet = tourDetailSet;
+    public void setTourDetailCollection(Collection<TourDetail> tourDetailCollection) {
+        this.tourDetailCollection = tourDetailCollection;
+    }
+
+    @XmlTransient
+    public Collection<Destination> getDestinationCollection() {
+        return destinationCollection;
+    }
+
+    public void setDestinationCollection(Collection<Destination> destinationCollection) {
+        this.destinationCollection = destinationCollection;
     }
 
     @Override
@@ -147,5 +150,5 @@ public class Image implements Serializable {
     public String toString() {
         return "com.lpthinh.pojo.Image[ id=" + id + " ]";
     }
-    
+
 }

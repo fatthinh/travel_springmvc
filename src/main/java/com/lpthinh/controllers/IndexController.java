@@ -27,7 +27,7 @@ public class IndexController {
         model.addAttribute("headerTitle", "Tours");
     }
 
-    @RequestMapping(value = "/", method = RequestMethod.GET)
+    @RequestMapping(value = "/hello", method = RequestMethod.GET)
     public String index(Model model,
             @RequestParam Map<String, String> params) {
 

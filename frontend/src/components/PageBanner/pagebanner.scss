@@ -1,0 +1,55 @@
+.tour__ban__con {
+    position: relative;
+    height: 50vh;
+    .tour__banner {
+          &::after {
+                content: '';
+                inset: 0;
+                position: absolute;
+                background-color: rgba(27, 27, 27, 0.404);
+                z-index: 2;
+          }
+    }
+    video {
+          z-index: -1;
+    }
+}
+.banner__text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 3;
+    text-align: center;
+    h2 {
+          color: var(--white);
+          font-size: 36px;
+    }
+    p {
+          color: var(--white);
+          font-size: 20px;
+    }
+    ul {
+          li {
+                font-size: 20px;
+                color: var(--white);
+                font-weight: 600;
+                span {
+                      padding-left: 10px;
+                      font-weight: 400;
+                }
+          }
+    }
+}
+.ban__border {
+    position: absolute;
+    bottom: 0;
+    z-index: 99;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    img {
+          filter: grayscale(0%);
+    }
+}

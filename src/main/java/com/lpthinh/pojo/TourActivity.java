@@ -4,15 +4,21 @@
  */
 package com.lpthinh.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
+import javax.persistence.Basic;
 import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -24,70 +30,88 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "TourActivity.findAll", query = "SELECT t FROM TourActivity t"),
-    @NamedQuery(name = "TourActivity.findByTourId", query = "SELECT t FROM TourActivity t WHERE t.tourActivityPK.tourId = :tourId"),
-    @NamedQuery(name = "TourActivity.findByActivityId", query = "SELECT t FROM TourActivity t WHERE t.tourActivityPK.activityId = :activityId"),
-    @NamedQuery(name = "TourActivity.findBySpecificDay", query = "SELECT t FROM TourActivity t WHERE t.specificDay = :specificDay")})
+    @NamedQuery(name = "TourActivity.findById", query = "SELECT t FROM TourActivity t WHERE t.id = :id"),
+    @NamedQuery(name = "TourActivity.findByDay", query = "SELECT t FROM TourActivity t WHERE t.day = :day"),
+    @NamedQuery(name = "TourActivity.findByRole", query = "SELECT t FROM TourActivity t WHERE t.role = :role")})
 public class TourActivity implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    @EmbeddedId
-    protected TourActivityPK tourActivityPK;
-    @Column(name = "specific_day")
-    private Integer specificDay;
-    @JoinColumn(name = "activity_id", referencedColumnName = "id", insertable = false, updatable = false)
-    @ManyToOne(optional = false)
-    private Activity activity;
-    @JoinColumn(name = "tour_id", referencedColumnName = "id", insertable = false, updatable = false)
-    @ManyToOne(optional = false)
-    private TourDetail tourDetail;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "id")
+    private Integer id;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "day")
+    private int day;
+    @Size(max = 255)
+    @Column(name = "role")
+    private String role;
+    @JoinColumn(name = "activity_id", referencedColumnName = "id")
+    @ManyToOne
+    private Activity activityId;
+    @JoinColumn(name = "tour_id", referencedColumnName = "id")
+    @ManyToOne
+    @JsonIgnore
+    private TourDetail tourId;
 
     public TourActivity() {
     }
 
-    public TourActivity(TourActivityPK tourActivityPK) {
-        this.tourActivityPK = tourActivityPK;
+    public TourActivity(Integer id) {
+        this.id = id;
     }
 
-    public TourActivity(int tourId, int activityId) {
-        this.tourActivityPK = new TourActivityPK(tourId, activityId);
+    public TourActivity(Integer id, int day) {
+        this.id = id;
+        this.day = day;
     }
 
-    public TourActivityPK getTourActivityPK() {
-        return tourActivityPK;
+    public Integer getId() {
+        return id;
     }
 
-    public void setTourActivityPK(TourActivityPK tourActivityPK) {
-        this.tourActivityPK = tourActivityPK;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
-    public Integer getSpecificDay() {
-        return specificDay;
+    public int getDay() {
+        return day;
     }
 
-    public void setSpecificDay(Integer specificDay) {
-        this.specificDay = specificDay;
+    public void setDay(int day) {
+        this.day = day;
     }
 
-    public Activity getActivity() {
-        return activity;
+    public String getRole() {
+        return role;
     }
 
-    public void setActivity(Activity activity) {
-        this.activity = activity;
+    public void setRole(String role) {
+        this.role = role;
     }
 
-    public TourDetail getTourDetail() {
-        return tourDetail;
+    public Activity getActivityId() {
+        return activityId;
     }
 
-    public void setTourDetail(TourDetail tourDetail) {
-        this.tourDetail = tourDetail;
+    public void setActivityId(Activity activityId) {
+        this.activityId = activityId;
+    }
+
+    public TourDetail getTourId() {
+        return tourId;
+    }
+
+    public void setTourId(TourDetail tourId) {
+        this.tourId = tourId;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (tourActivityPK != null ? tourActivityPK.hashCode() : 0);
+        hash += (id != null ? id.hashCode() : 0);
         return hash;
     }
 
@@ -98,7 +122,7 @@ public class TourActivity implements Serializable {
             return false;
         }
         TourActivity other = (TourActivity) object;
-        if ((this.tourActivityPK == null && other.tourActivityPK != null) || (this.tourActivityPK != null && !this.tourActivityPK.equals(other.tourActivityPK))) {
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
         return true;
@@ -106,7 +130,7 @@ public class TourActivity implements Serializable {
 
     @Override
     public String toString() {
-        return "com.lpthinh.pojo.TourActivity[ tourActivityPK=" + tourActivityPK + " ]";
+        return "com.lpthinh.pojo.TourActivity[ id=" + id + " ]";
     }
-    
+
 }

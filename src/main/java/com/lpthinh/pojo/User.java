@@ -6,8 +6,8 @@ package com.lpthinh.pojo;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Date;
-import java.util.Set;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -92,17 +92,14 @@ public class User implements Serializable {
     @Column(name = "address")
     private String address;
     @JsonIgnore
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "author")
-    private Set<News> newsSet;
-    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "receptionist")
-    private Set<Booking> bookingSet;
+    private Collection<Booking> bookingCollection;
     @JsonIgnore
     @OneToMany(mappedBy = "tourGuide")
-    private Set<Tour> tourSet;
+    private Collection<Tour> tourCollection;
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "cashier")
-    private Set<Invoice> invoiceSet;
+    private Collection<Invoice> invoiceCollection;
 
     public User() {
     }
@@ -117,10 +114,6 @@ public class User implements Serializable {
         this.role = role;
         this.lastName = lastName;
         this.phone = phone;
-    }
-
-    public String getFullName() {
-        return this.firstName + " " + this.lastName;
     }
 
     public String getPassword() {
@@ -204,39 +197,30 @@ public class User implements Serializable {
     }
 
     @XmlTransient
-    public Set<News> getNewsSet() {
-        return newsSet;
+    public Collection<Booking> getBookingCollection() {
+        return bookingCollection;
     }
 
-    public void setNewsSet(Set<News> newsSet) {
-        this.newsSet = newsSet;
-    }
-
-    @XmlTransient
-    public Set<Booking> getBookingSet() {
-        return bookingSet;
-    }
-
-    public void setBookingSet(Set<Booking> bookingSet) {
-        this.bookingSet = bookingSet;
+    public void setBookingCollection(Collection<Booking> bookingCollection) {
+        this.bookingCollection = bookingCollection;
     }
 
     @XmlTransient
-    public Set<Tour> getTourSet() {
-        return tourSet;
+    public Collection<Tour> getTourCollection() {
+        return tourCollection;
     }
 
-    public void setTourSet(Set<Tour> tourSet) {
-        this.tourSet = tourSet;
+    public void setTourCollection(Collection<Tour> tourCollection) {
+        this.tourCollection = tourCollection;
     }
 
     @XmlTransient
-    public Set<Invoice> getInvoiceSet() {
-        return invoiceSet;
+    public Collection<Invoice> getInvoiceCollection() {
+        return invoiceCollection;
     }
 
-    public void setInvoiceSet(Set<Invoice> invoiceSet) {
-        this.invoiceSet = invoiceSet;
+    public void setInvoiceCollection(Collection<Invoice> invoiceCollection) {
+        this.invoiceCollection = invoiceCollection;
     }
 
     @Override

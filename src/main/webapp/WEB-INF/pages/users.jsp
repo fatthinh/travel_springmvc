@@ -112,7 +112,7 @@
     document.querySelectorAll(".paginate").forEach(paginate => {
         paginate.addEventListener("click", () => {
             const ind = document.querySelector(".page").innerText;
-            var newUrl = `http://localhost:8080/project/users/?page=` + ind;
+            var newUrl = `http://localhost:8082/project/users?page=` + ind;
             window.location.href = newUrl;
         });
     });

@@ -1,0 +1,108 @@
+.filter__sec {
+      background-color: var(--white);
+      box-shadow: 1px 1px 20px 1px rgba(168, 168, 168, 0.13);
+      .find__now {
+            background-color: var(--brand);
+            border-color: var(--brand);
+            border-radius: 0;
+            width: 100%;
+            height: 100%;
+            color: var(--white);
+            position: relative;
+            overflow: hidden;
+            .label {
+                  font-family: var(--para__font);
+                  position: relative;
+                  font-size: 18px;
+                  font-weight: 500;
+                  top: -1px;
+            }
+            .transition {
+                  transition-timing-function: cubic-bezier(0, 0, 0.2, 1);
+                  transition-duration: 0.8s;
+                  background-color: var(--white);
+                  border-radius: 9999px;
+                  width: 0;
+                  height: 0;
+                  position: absolute;
+                  left: 50%;
+                  top: 50%;
+                  transform: translate(-50%, -50%);
+            }
+            &:hover {
+                  .transition {
+                        height: 15em;
+                        width: 15em;
+                  }
+                  .label {
+                        color: var(--brand);
+                  }
+            }
+      }
+      .col:not(:last-child) {
+            border-right: 2px solid rgba(179, 179, 179, 0.521);
+            display: flex;
+            align-items: center;
+      }
+      i {
+            color: var(--black);
+      }
+      .dropdown {
+            width: 100%;
+            button {
+                  width: 100%;
+                  background-color: transparent;
+                  color: var(--black);
+                  border: none;
+                  text-align: start;
+                  font-weight: 500;
+                  &::after {
+                        position: absolute;
+                        right: 5%;
+                        top: 50%;
+                        transition: 0.6s all;
+                  }
+                  &:active {
+                        background-color: transparent;
+                        color: var(--black);
+                  }
+            }
+            .dropdown-menu {
+                  width: 100%;
+                  border-radius: 0;
+                  animation: opacity 0.4s linear;
+                  &:active {
+                        animation: sopacity 0.4s linear;
+                  }
+                  a {
+                        color: var(--black);
+                        transition: 0.3s;
+                        &:hover {
+                              background-color: var(--brand);
+                              color: var(--white);
+                        }
+                  }
+            }
+            .show {
+                  &::after {
+                        transform: rotateX(3.142rad);
+                  }
+            }
+      }
+}
+@keyframes opacity {
+      0% {
+            opacity: 0;
+      }
+      100% {
+            opacity: 1;
+      }
+}
+@keyframes sopacity {
+      0% {
+            opacity: 1;
+      }
+      100% {
+            opacity: 0;
+      }
+}

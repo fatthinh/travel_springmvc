@@ -5,8 +5,8 @@
 package com.lpthinh.pojo;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Date;
-import java.util.Set;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -67,9 +67,9 @@ public class Booking implements Serializable {
     @ManyToOne(optional = false)
     private User receptionist;
     @OneToMany(mappedBy = "booking")
-    private Set<Ticket> ticketSet;
+    private Collection<Ticket> ticketCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "booking")
-    private Set<Review> reviewSet;
+    private Collection<Review> reviewCollection;
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "booking")
     private Invoice invoice;
 
@@ -137,21 +137,21 @@ public class Booking implements Serializable {
     }
 
     @XmlTransient
-    public Set<Ticket> getTicketSet() {
-        return ticketSet;
+    public Collection<Ticket> getTicketCollection() {
+        return ticketCollection;
     }
 
-    public void setTicketSet(Set<Ticket> ticketSet) {
-        this.ticketSet = ticketSet;
+    public void setTicketCollection(Collection<Ticket> ticketCollection) {
+        this.ticketCollection = ticketCollection;
     }
 
     @XmlTransient
-    public Set<Review> getReviewSet() {
-        return reviewSet;
+    public Collection<Review> getReviewCollection() {
+        return reviewCollection;
     }
 
-    public void setReviewSet(Set<Review> reviewSet) {
-        this.reviewSet = reviewSet;
+    public void setReviewCollection(Collection<Review> reviewCollection) {
+        this.reviewCollection = reviewCollection;
     }
 
     public Invoice getInvoice() {

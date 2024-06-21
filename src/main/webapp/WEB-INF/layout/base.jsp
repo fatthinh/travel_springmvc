@@ -19,12 +19,9 @@
             href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
             rel="stylesheet"
             />
-        <link href="<c:url value="/css/style.css"/>" rel="stylesheet" />
-        <style>
+        <link href="<c:url value="/css/main.css"/>" rel="stylesheet" />
 
-        </style>
-
-        <script src="<c:url value="/js/script.js" />"></script>
+        <script src="<c:url value="/js/main.js" />"></script>
     </head
 
     <body>
@@ -40,5 +37,7 @@
             </div>
         </div>
         <tiles:insertAttribute name="modal" />
+        <tiles:insertAttribute name="activityGallery" />
+        <tiles:insertAttribute name="imageGallery" />
     </body>
 </html>

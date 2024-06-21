@@ -17,8 +17,7 @@
                         <label for="first-name-modal" class="form__label form__label--small"
                                >First name</label
                         >
-                        <div class="form__text-input form__text-input--small">
-                            <input
+                        <div class="form__text-input form__
                                 type="text"
                                 name="firstName"
                                 id="first-name-modal"
@@ -27,7 +26,8 @@
                                 required
                                 minlength="2"
                                 />
-                        </div>
+                        </div>text-input--small">
+                            <input
                         <p class="form__error">
                             First name must be at least 2 characters
                         </p>

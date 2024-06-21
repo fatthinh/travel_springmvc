@@ -1,0 +1,63 @@
+.tour__slide__sec {
+      .swiper-slide {
+            box-shadow: 1px 1px 20px 1px rgba(168, 168, 168, 0.13);
+            background-color: var(--white);
+      }
+      .swiper-button-prev,
+      .swiper-button-next {
+            background-color: #a1a1a1a4;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            transition: 0.4s;
+            &::after {
+                  color: var(--white);
+                  font-size: 16px;
+            }
+            &:hover {
+                  background-color: var(--brand);
+            }
+      }
+      .desc {
+            p {
+                  font-weight: 600;
+                  font-size: 20px;
+                  color: var(--black);
+                  del {
+                        color: gray;
+                        font-weight: 400;
+                        font-size: 18px;
+                  }
+            }
+            .price {
+                  color: var(--brand);
+                  line-height: 46px;
+            }
+            .name {
+                  font-size: 26px;
+                  line-height: 46px;
+            }
+            .duration {
+                  font-size: 16px;
+                  p {
+                        font-size: 16px;
+                        color: rgb(75, 75, 75);
+                  }
+            }
+            .inclusion {
+                  h4 {
+                        font-size: 20px;
+                  }
+                  ul {
+                        li {
+                              line-height: 32px;
+                              display: flex;
+                              gap: 12px;
+                              i {
+                                    color: var(--brand);
+                              }
+                        }
+                  }
+            }
+      }
+}

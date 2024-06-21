@@ -1,8 +1,17 @@
 package com.lpthinh.configs;
 
+import com.cloudinary.Cloudinary;
+import com.cloudinary.utils.ObjectUtils;
+import com.lpthinh.formatters.CategoryFormatter;
+import com.lpthinh.formatters.DestinationFormatter;
+import com.lpthinh.formatters.TourDetailFormatter;
+import com.lpthinh.formatters.TourFormatter;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.format.FormatterRegistry;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
@@ -18,12 +27,12 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  */
 @Configuration
 @EnableWebMvc
+@EnableTransactionManagement
 @ComponentScan(basePackages = {
     "com.lpthinh.controllers",
     "com.lpthinh.repositories",
     "com.lpthinh.services"
 })
-@EnableTransactionManagement
 public class WebApplicationContextConfig implements WebMvcConfigurer {
 
     @Override
@@ -47,4 +56,28 @@ public class WebApplicationContextConfig implements WebMvcConfigurer {
 //
 //        return resolver;
 //    }
+    @Bean
+    public CommonsMultipartResolver multipartResolver() {
+        CommonsMultipartResolver resolver = new CommonsMultipartResolver();
+        resolver.setDefaultEncoding("UTF-8");
+        return resolver;
+    }
+
+    @Bean
+    public Cloudinary cloudinary() {
+        Cloudinary cloudinary
+                = new Cloudinary(ObjectUtils.asMap(
+                        "cloud_name", "dzjhqjxqj",
+                        "api_key", "743759262179546",
+                        "api_secret", "AEYz9EtFM3ZmbtoNrSCCr_LFIEM",
+                        "secure", true));
+        return cloudinary;
+    }
+
+    @Override
+    public void addFormatters(FormatterRegistry registry) {
+        registry.addFormatter(new DestinationFormatter());
+        registry.addFormatter(new CategoryFormatter());
+        registry.addFormatter(new TourDetailFormatter());
+    }
 }

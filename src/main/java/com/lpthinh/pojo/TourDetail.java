@@ -4,25 +4,33 @@
  */
 package com.lpthinh.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
-import java.util.Set;
+import java.lang.reflect.Array;
+import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.Lob;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
@@ -33,19 +41,26 @@ import javax.xml.bind.annotation.XmlTransient;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "TourDetail.findAll", query = "SELECT t FROM TourDetail t"),
-    @NamedQuery(name = "TourDetail.findByTotalPrice", query = "SELECT t FROM TourDetail t WHERE t.totalPrice = :totalPrice"),
-    @NamedQuery(name = "TourDetail.findByDescription", query = "SELECT t FROM TourDetail t WHERE t.description = :description"),
+    @NamedQuery(name = "TourDetail.findByPrice", query = "SELECT t FROM TourDetail t WHERE t.price = :price"),
+    @NamedQuery(name = "TourDetail.findByCapacity", query = "SELECT t FROM TourDetail t WHERE t.capacity = :capacity"),
+    @NamedQuery(name = "TourDetail.findByThumbnail", query = "SELECT t FROM TourDetail t WHERE t.thumbnail = :thumbnail"),
     @NamedQuery(name = "TourDetail.findById", query = "SELECT t FROM TourDetail t WHERE t.id = :id"),
     @NamedQuery(name = "TourDetail.findByName", query = "SELECT t FROM TourDetail t WHERE t.name = :name")})
 public class TourDetail implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
-    @Column(name = "total_price")
-    private Double totalPrice;
-    @Size(max = 255)
+    @Lob
+    @Size(max = 65535)
     @Column(name = "description")
     private String description;
+    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
+    @Column(name = "price")
+    private Double price;
+    @Column(name = "capacity")
+    private Integer capacity;
+    @Size(max = 255)
+    @Column(name = "thumbnail")
+    private String thumbnail;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
@@ -56,18 +71,33 @@ public class TourDetail implements Serializable {
     @Size(min = 1, max = 100)
     @Column(name = "name")
     private String name;
+    @JoinTable(name = "tour_category", joinColumns = {
+        @JoinColumn(name = "tour_detail_id", referencedColumnName = "id")}, inverseJoinColumns = {
+        @JoinColumn(name = "category_id", referencedColumnName = "id")})
+    @ManyToMany
+    @JsonIgnore
+    private Collection<Category> categoryCollection;
+    @JoinTable(name = "tour_image", joinColumns = {
+        @JoinColumn(name = "tour_detail_id", referencedColumnName = "id")}, inverseJoinColumns = {
+        @JoinColumn(name = "image_id", referencedColumnName = "id")})
+    @ManyToMany
+    @JsonIgnore
+    private Collection<Image> imageCollection;
+    @OneToMany(mappedBy = "tourId", fetch = FetchType.EAGER)
+    @JsonIgnore
+    private Collection<TourActivity> tourActivityCollection;
+    @JoinColumn(name = "destination", referencedColumnName = "id")
+    @ManyToOne(fetch = FetchType.EAGER)
+    private Destination destination;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "tourDetail")
-    private Set<TourActivity> tourActivitySet;
-    @JoinColumn(name = "accommodation", referencedColumnName = "id")
-    @ManyToOne
-    private Accommodation accommodation;
-    @JoinColumn(name = "image", referencedColumnName = "id")
-    @ManyToOne
-    private Image image;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "tourDetail")
-    private Set<Tour> tourSet;
+    @JsonIgnore
+    private Collection<Tour> tourCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "tour")
-    private Set<Review> reviewSet;
+    @JsonIgnore
+    private Collection<Review> reviewCollection;
+
+    @Transient
+    private MultipartFile file;
 
     public TourDetail() {
     }
@@ -81,20 +111,38 @@ public class TourDetail implements Serializable {
         this.name = name;
     }
 
-    public Double getTotalPrice() {
-        return totalPrice;
-    }
-
-    public void setTotalPrice(Double totalPrice) {
-        this.totalPrice = totalPrice;
-    }
-
     public String getDescription() {
         return description;
     }
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Double getPrice() {
+        return this.getTourActivityCollection().stream()
+                .mapToDouble(item -> item.getActivityId().getPrice())
+                .sum();
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
+    }
+
+    public Integer getCapacity() {
+        return capacity;
+    }
+
+    public void setCapacity(Integer capacity) {
+        this.capacity = capacity;
+    }
+
+    public String getThumbnail() {
+        return thumbnail;
+    }
+
+    public void setThumbnail(String thumbnail) {
+        this.thumbnail = thumbnail;
     }
 
     public Integer getId() {
@@ -114,46 +162,56 @@ public class TourDetail implements Serializable {
     }
 
     @XmlTransient
-    public Set<TourActivity> getTourActivitySet() {
-        return tourActivitySet;
+    public Collection<Category> getCategoryCollection() {
+        return categoryCollection;
     }
 
-    public void setTourActivitySet(Set<TourActivity> tourActivitySet) {
-        this.tourActivitySet = tourActivitySet;
-    }
-
-    public Accommodation getAccommodation() {
-        return accommodation;
-    }
-
-    public void setAccommodation(Accommodation accommodation) {
-        this.accommodation = accommodation;
-    }
-
-    public Image getImage() {
-        return image;
-    }
-
-    public void setImage(Image image) {
-        this.image = image;
+    public void setCategoryCollection(Collection<Category> categoryCollection) {
+        this.categoryCollection = categoryCollection;
     }
 
     @XmlTransient
-    public Set<Tour> getTourSet() {
-        return tourSet;
+    public Collection<Image> getImageCollection() {
+        return imageCollection;
     }
 
-    public void setTourSet(Set<Tour> tourSet) {
-        this.tourSet = tourSet;
+    public void setImageCollection(Collection<Image> imageCollection) {
+        this.imageCollection = imageCollection;
     }
 
     @XmlTransient
-    public Set<Review> getReviewSet() {
-        return reviewSet;
+    public Collection<TourActivity> getTourActivityCollection() {
+        return tourActivityCollection;
     }
 
-    public void setReviewSet(Set<Review> reviewSet) {
-        this.reviewSet = reviewSet;
+    public void setTourActivityCollection(Collection<TourActivity> tourActivityCollection) {
+        this.tourActivityCollection = tourActivityCollection;
+    }
+
+    public Destination getDestination() {
+        return destination;
+    }
+
+    public void setDestination(Destination destination) {
+        this.destination = destination;
+    }
+
+    @XmlTransient
+    public Collection<Tour> getTourCollection() {
+        return tourCollection;
+    }
+
+    public void setTourCollection(Collection<Tour> tourCollection) {
+        this.tourCollection = tourCollection;
+    }
+
+    @XmlTransient
+    public Collection<Review> getReviewCollection() {
+        return reviewCollection;
+    }
+
+    public void setReviewCollection(Collection<Review> reviewCollection) {
+        this.reviewCollection = reviewCollection;
     }
 
     @Override
@@ -180,5 +238,19 @@ public class TourDetail implements Serializable {
     public String toString() {
         return "com.lpthinh.pojo.TourDetail[ id=" + id + " ]";
     }
-    
+
+    /**
+     * @return the file
+     */
+    public MultipartFile getFile() {
+        return file;
+    }
+
+    /**
+     * @param file the file to set
+     */
+    public void setFile(MultipartFile file) {
+        this.file = file;
+    }
+
 }

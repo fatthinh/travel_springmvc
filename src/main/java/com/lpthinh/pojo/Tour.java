@@ -4,9 +4,10 @@
  */
 package com.lpthinh.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Date;
-import java.util.Set;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -24,6 +25,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  *
@@ -35,7 +37,8 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Tour.findAll", query = "SELECT t FROM Tour t"),
     @NamedQuery(name = "Tour.findById", query = "SELECT t FROM Tour t WHERE t.id = :id"),
-    @NamedQuery(name = "Tour.findByDeparture", query = "SELECT t FROM Tour t WHERE t.departure = :departure")})
+    @NamedQuery(name = "Tour.findByDepartureDate", query = "SELECT t FROM Tour t WHERE t.departureDate = :departureDate"),
+    @NamedQuery(name = "Tour.findByDiscount", query = "SELECT t FROM Tour t WHERE t.discount = :discount")})
 public class Tour implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -44,16 +47,23 @@ public class Tour implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @Column(name = "departure")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date departure;
+    @Column(name = "departure_date")
+    @Temporal(TemporalType.DATE)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date departureDate;
+    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
+    @Column(name = "discount")
+    private Double discount;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "tour")
-    private Set<Booking> bookingSet;
+    @JsonIgnore
+    private Collection<Booking> bookingCollection;
     @JoinColumn(name = "tour_detail", referencedColumnName = "id")
     @ManyToOne(optional = false)
+    @JsonIgnore
     private TourDetail tourDetail;
     @JoinColumn(name = "tour_guide", referencedColumnName = "id")
     @ManyToOne
+    @JsonIgnore
     private User tourGuide;
 
     public Tour() {
@@ -71,21 +81,29 @@ public class Tour implements Serializable {
         this.id = id;
     }
 
-    public Date getDeparture() {
-        return departure;
+    public Date getDepartureDate() {
+        return departureDate;
     }
 
-    public void setDeparture(Date departure) {
-        this.departure = departure;
+    public void setDepartureDate(Date departureDate) {
+        this.departureDate = departureDate;
+    }
+
+    public Double getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(Double discount) {
+        this.discount = discount;
     }
 
     @XmlTransient
-    public Set<Booking> getBookingSet() {
-        return bookingSet;
+    public Collection<Booking> getBookingCollection() {
+        return bookingCollection;
     }
 
-    public void setBookingSet(Set<Booking> bookingSet) {
-        this.bookingSet = bookingSet;
+    public void setBookingCollection(Collection<Booking> bookingCollection) {
+        this.bookingCollection = bookingCollection;
     }
 
     public TourDetail getTourDetail() {
@@ -128,5 +146,5 @@ public class Tour implements Serializable {
     public String toString() {
         return "com.lpthinh.pojo.Tour[ id=" + id + " ]";
     }
-    
+
 }

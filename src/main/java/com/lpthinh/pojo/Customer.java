@@ -5,8 +5,8 @@
 package com.lpthinh.pojo;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Date;
-import java.util.Set;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -74,7 +74,7 @@ public class Customer implements Serializable {
     @Column(name = "address")
     private String address;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "customer")
-    private Set<Booking> bookingSet;
+    private Collection<Booking> bookingCollection;
 
     public Customer() {
     }
@@ -146,12 +146,12 @@ public class Customer implements Serializable {
     }
 
     @XmlTransient
-    public Set<Booking> getBookingSet() {
-        return bookingSet;
+    public Collection<Booking> getBookingCollection() {
+        return bookingCollection;
     }
 
-    public void setBookingSet(Set<Booking> bookingSet) {
-        this.bookingSet = bookingSet;
+    public void setBookingCollection(Collection<Booking> bookingCollection) {
+        this.bookingCollection = bookingCollection;
     }
 
     @Override
