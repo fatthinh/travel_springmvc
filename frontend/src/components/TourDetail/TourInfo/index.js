@@ -12,9 +12,7 @@ const TourInfo = ({ tourdetails, tourplan, tourGallery }) => {
       return (
             <main className="tour__info">
                   <section className="price d-flex align-items-center gap-2 py-2">
-                        <h2>
-                              {/* Rs.{afterdiscount()}/<del>Rs.{tourdetails.price}</del> */}${tourdetails.price}
-                        </h2>
+                        <h2>${tourdetails.price}</h2>
                         <p>(Per Person)</p>
                   </section>
                   <section className="day__time d-md-flex gap-5 py-2">
@@ -38,9 +36,6 @@ const TourInfo = ({ tourdetails, tourplan, tourGallery }) => {
                         </p>
                   </section>
                   <section className="desc py-2 d-flex flex-column gap-3 ">
-                        {/* {tourdetails.description.map((item, index) => (
-                              <p key={index}>{item}</p>
-                        ))} */}
                         <p>{tourdetails.description}</p>
                   </section>
                   <section className="image pb-5 pt-4">
@@ -58,29 +53,12 @@ const TourInfo = ({ tourdetails, tourplan, tourGallery }) => {
                                     <h4>Destination</h4>
                                     <p>{tourdetails.destination?.name}</p>
                               </li>
-                              {/* <li className="d-md-flex align-items-center ">
-                                    <h4>Departure/Return Location</h4>
-                                    <p>{tourdetails.departureandreturn}</p>
-                              </li>
-                              <li className="d-md-flex align-items-center">
-                                    <h4>Departure Time</h4>
-                                    <p>{tourdetails.departuretime}</p>
-                              </li>
-                              <li className="d-md-flex align-items-center">
-                                    <h4>Return Time</h4>
-                                    <p>{tourdetails.returntime}</p>
-                              </li> */}
                         </ul>
                   </section>
                   <section className="include d-md-flex">
                         <h4>Included Package Facility:</h4>
                         <div className="include__items">
                               <ul className="d-md-flex flex-md-wrap">
-                                    {/* {tourdetails.included.map((item, index) => (
-                                          <li key={index}>
-                                                <i class="bi bi-check-lg"></i> {item}
-                                          </li>
-                                    ))} */}
                                     <li>
                                           <i style={{ padding: 8 }}>
                                                 <FontAwesomeIcon icon={faCheck} />

@@ -25,12 +25,6 @@
                     <option value='admin'>Admin</option>
                     <option value='cashier'>Cashier</option>
                 </select>
-                <!--                <label for='status-filter'>Status</label>
-                                <select id='status-filter' name='status' form='filter-form'>
-                                    <option value='all'>All Status</option>
-                                    <option value='active'>Active</option>
-                                    <option value='disabled'>Disabled</option>
-                                </select>-->
                 <div class="filter-menu-buttons">
                     <button class="filter-button reset">Reset</button>
                     <button class="filter-button apply" type='submit'>Apply</button>

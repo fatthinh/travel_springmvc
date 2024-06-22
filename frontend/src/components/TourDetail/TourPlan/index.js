@@ -16,14 +16,6 @@ const TourPlan = ({ tourPlan }) => {
                                           Day 0{item.day}: {item.activityId.name}
                                     </h4>
                                     <p className="mb-4">{item.activityId.description}</p>
-                                    {/* <ul>
-                                          {item.activities?.map((item, index) => (
-                                                <li key={index}>
-                                                      <i class="bi bi-check-lg"></i> {item}
-                                                </li>
-                                          ))}
-                                    </ul> */}
-                                    {/* <p className="mb-4">{item.activityId}</p> */}
                               </div>
                         </div>
                   ))}
