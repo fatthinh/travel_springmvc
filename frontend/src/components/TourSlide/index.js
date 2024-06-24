@@ -9,12 +9,10 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import './tourslide.scss';
 // import required modules
-// import { Navigation } from 'swiper';
 
 // Core modules imports are same as usual
 import { Navigation } from 'swiper/modules';
 // Direct React component imports
-// import { Swiper, SwiperSlide } from 'swiper/swiper-react.mjs';
 import { LinkContainer } from 'react-router-bootstrap';
 
 const TourSlide = () => {
@@ -22,6 +20,7 @@ const TourSlide = () => {
             const discountAmount = (item.discount / 100) * item.price;
             return item.price - discountAmount;
       };
+
       return (
             <section className="tour__slide__sec">
                   <Container>

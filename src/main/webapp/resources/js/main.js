@@ -27,6 +27,15 @@ function initJsToggle() {
                 $(target).classList.toggle("show", isHidden);
             });
         };
+
+        document.onclick = function (e) {
+            if (!e.target.closest(target)) {
+                const isHidden = $(target).classList.contains("hide");
+                if (!isHidden) {
+                    button.click();
+                }
+            }
+        };
     });
 }
 
@@ -50,7 +59,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 $(`#${target.dataset.name}Display`).value = categoriesDisplay;
 
                 let body = target.getAttribute("data-id") ? JSON.stringify({
-                    first_obj: target.getAttribute("data-id"),
+                    first_obj: target.dataset.id,
                     second_obj: e.target.dataset.id
                 }) : JSON.stringify({
                     second_obj: e.target.dataset.id
@@ -83,9 +92,8 @@ document.addEventListener("DOMContentLoaded", () => {
     $$(".gallery-item").forEach((item) => {
         item.addEventListener("click", (e) => {
             const target = e.target.closest(".modal");
-
             const body = target.getAttribute("data-id") ? JSON.stringify({
-                first_obj: target.getAttribute("data-id"),
+                first_obj: target.dataset.id,
                 second_obj: e.target.dataset.id
             }) : JSON.stringify({
                 second_obj: e.target.dataset.id

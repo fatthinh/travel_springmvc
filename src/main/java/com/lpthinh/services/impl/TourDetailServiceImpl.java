@@ -16,7 +16,6 @@ import com.lpthinh.repositories.CategoryRepository;
 import com.lpthinh.repositories.TourDetailRepository;
 import com.lpthinh.services.TourDetailService;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -70,7 +69,6 @@ public class TourDetailServiceImpl implements TourDetailService {
             try {
                 Map response = this.cloudinary.uploader().upload(tourDetail.getFile().getBytes(), ObjectUtils.asMap("resource_type", "auto"));
                 tourDetail.setThumbnail(response.get("secure_url").toString());
-                System.out.print(response.get("secure_url").toString());
             } catch (IOException ex) {
                 Logger.getLogger(DestinationServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -83,7 +81,69 @@ public class TourDetailServiceImpl implements TourDetailService {
         for (Activity act : activities.get("newTour")) {
             this.activityRepo.createTourActivity(act, tourDetail, count++);
         }
-
     }
 
+    @Override
+    public void put(TourDetail tourDetail, Map<Object, List<Category>> categories, Map<Object, List<Activity>> activities, Map<Object, List<Image>> gallery) {
+        TourDetail detail = this.tourRepo.getTourById(tourDetail.getId());
+
+        if (!tourDetail.getFile().isEmpty()) {
+            try {
+                Map response = this.cloudinary.uploader().upload(tourDetail.getFile().getBytes(), ObjectUtils.asMap("resource_type", "auto"));
+                tourDetail.setThumbnail(response.get("secure_url").toString());
+            } catch (IOException ex) {
+                Logger.getLogger(DestinationServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+            tourDetail.setThumbnail(detail.getThumbnail());
+        }
+
+        //categories
+        List<Category> availableCates = (List<Category>) detail.getCategoryCollection();
+
+        if (categories != null) {
+            List<Category> newCates = categories.get(tourDetail.getId().toString());
+            if (newCates != null) {
+                newCates.forEach(item -> {
+                    if (!availableCates.remove(item)) {
+                        availableCates.add(item);
+                    }
+                });
+            }
+        }
+
+        // gallery
+        List<Image> availableGallery = (List<Image>) detail.getImageCollection();
+
+        if (gallery != null) {
+            List<Image> newGallery = gallery.get(tourDetail.getId().toString());
+            if (newGallery != null) {
+                newGallery.forEach(item -> {
+                    if (!availableGallery.remove(item)) {
+                        availableGallery.add(item);
+                    }
+                });
+            }
+        }
+
+        tourDetail.setImageCollection(availableGallery);
+        tourDetail.setCategoryCollection(availableCates);
+        this.tourRepo.put(tourDetail);
+
+        // activities
+        List<TourActivity> availableActivities = (List<TourActivity>) detail.getTourActivityCollection();
+
+        if (activities != null) {
+            List<Activity> newActivities = activities.get(tourDetail.getId().toString());
+            if (newActivities != null) {
+                newActivities.forEach(item -> {
+                    if (availableActivities.removeIf(avai -> avai.getActivityId().getId() == item.getId())) {
+                        this.activityRepo.removeTourActivity(item, detail);
+                    } else {
+                        this.activityRepo.createTourActivity(item, tourDetail, 1);
+                    }
+                });
+            }
+        }
+    }
 }

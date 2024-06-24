@@ -30,6 +30,8 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 import org.springframework.web.multipart.MultipartFile;
 
 /**
@@ -76,12 +78,14 @@ public class TourDetail implements Serializable {
         @JoinColumn(name = "category_id", referencedColumnName = "id")})
     @ManyToMany
     @JsonIgnore
+    @LazyCollection(LazyCollectionOption.FALSE)
     private Collection<Category> categoryCollection;
     @JoinTable(name = "tour_image", joinColumns = {
         @JoinColumn(name = "tour_detail_id", referencedColumnName = "id")}, inverseJoinColumns = {
         @JoinColumn(name = "image_id", referencedColumnName = "id")})
     @ManyToMany
     @JsonIgnore
+    @LazyCollection(LazyCollectionOption.FALSE)
     private Collection<Image> imageCollection;
     @OneToMany(mappedBy = "tourId", fetch = FetchType.EAGER)
     @JsonIgnore

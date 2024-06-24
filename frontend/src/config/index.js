@@ -1,5 +1,5 @@
 import routes from './routes';
-const BASE_URL = 'http://localhost:8080/project/api';
+const BASE_URL = 'http://localhost:8082/project/api';
 
 const config = {
       routes,

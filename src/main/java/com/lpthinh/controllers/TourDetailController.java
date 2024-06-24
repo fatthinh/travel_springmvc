@@ -16,10 +16,12 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -72,12 +74,45 @@ public class TourDetailController {
         if (!bindingResult.hasErrors()) {
             try {
                 this.tourService.create(tourDetailObj, (Map<Object, List<Category>>) session.getAttribute("tour-category"), (Map<Object, List<Activity>>) session.getAttribute("tour-activity"), (Map<Object, List<Image>>) session.getAttribute("tour-gallery"));
+                session.removeAttribute("tour-category");
+                session.removeAttribute("tour-gallery");
+                session.removeAttribute("tour-activity");
                 return "redirect:/";
             } catch (Exception e) {
                 System.err.println(e.getMessage());
             }
         }
 
-        return "activities";
+        return "tours-detail";
+    }
+
+    @RequestMapping(value = "/tours/{tourId}", method = RequestMethod.GET)
+    public String retrieve(Model model, @PathVariable("tourId") int id) {
+        TourDetail tourDetail = tourService.getTourById(id);
+        model.addAttribute("tourdetails", tourDetail);
+        model.addAttribute("tourplan", this.tourService.getActivitiesByDetail(tourDetail));
+        model.addAttribute("tourgallery", this.tourService.getGallery(tourDetail));
+        model.addAttribute("addNewBtn", "#edit");
+        model.addAttribute("headerTitle", tourDetail.getName());
+
+        return "tour-detail";
+    }
+
+    @RequestMapping(value = "/tours/{tourId}", method = RequestMethod.POST)
+    public String update(@ModelAttribute("tourdetails") @Valid TourDetail tourdetails, BindingResult bindingResult, HttpSession session) {
+        if (!bindingResult.hasErrors()) {
+            try {
+                this.tourService.put(tourdetails, (Map<Object, List<Category>>) session.getAttribute("tour-category"), (Map<Object, List<Activity>>) session.getAttribute("tour-activity"), (Map<Object, List<Image>>) session.getAttribute("tour-gallery"));
+                session.removeAttribute("tour-category");
+                session.removeAttribute("tour-gallery");
+                session.removeAttribute("tour-activity");
+
+                return String.format("redirect:/tours/%d", tourdetails.getId());
+            } catch (Exception e) {
+                System.err.println(e.getMessage());
+            }
+        }
+
+        return "tours-detail";
     }
 }

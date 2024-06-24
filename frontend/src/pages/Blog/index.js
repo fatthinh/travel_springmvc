@@ -8,7 +8,7 @@ import { LinkContainer } from 'react-router-bootstrap';
 const Blogs = () => {
       return (
             <section>
-                  <PageBanner title="Astrip Blogs" />
+                  <PageBanner title="Our Blogs" />
                   <section className="blog__page my-5">
                         <Container>
                               <Row>

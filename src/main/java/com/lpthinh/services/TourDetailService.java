@@ -28,4 +28,6 @@ public interface TourDetailService {
     Collection<Image> getGallery(TourDetail detail);
 
     void create(TourDetail tourDetail, Map<Object, List<Category>> categories, Map<Object, List<Activity>> activities, Map<Object, List<Image>> gallery);
+
+    void put(TourDetail tourDetail, Map<Object, List<Category>> categories, Map<Object, List<Activity>> activities, Map<Object, List<Image>> gallery);
 }

@@ -32,25 +32,18 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Ticket.findAll", query = "SELECT t FROM Ticket t"),
-    @NamedQuery(name = "Ticket.findBySingleRoom", query = "SELECT t FROM Ticket t WHERE t.singleRoom = :singleRoom"),
-    @NamedQuery(name = "Ticket.findByFirstName", query = "SELECT t FROM Ticket t WHERE t.firstName = :firstName"),
-    @NamedQuery(name = "Ticket.findByLastName", query = "SELECT t FROM Ticket t WHERE t.lastName = :lastName"),
+    @NamedQuery(name = "Ticket.findByName", query = "SELECT t FROM Ticket t WHERE t.name = :name"),
     @NamedQuery(name = "Ticket.findByDob", query = "SELECT t FROM Ticket t WHERE t.dob = :dob"),
     @NamedQuery(name = "Ticket.findById", query = "SELECT t FROM Ticket t WHERE t.id = :id"),
     @NamedQuery(name = "Ticket.findByCreatedAt", query = "SELECT t FROM Ticket t WHERE t.createdAt = :createdAt")})
 public class Ticket implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    @Column(name = "single_room")
-    private Boolean singleRoom;
-    @Size(max = 50)
-    @Column(name = "first_name")
-    private String firstName;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 50)
-    @Column(name = "last_name")
-    private String lastName;
+    @Column(name = "name")
+    private String name;
     @Column(name = "dob")
     @Temporal(TemporalType.DATE)
     private Date dob;
@@ -76,33 +69,18 @@ public class Ticket implements Serializable {
         this.id = id;
     }
 
-    public Ticket(Integer id, String lastName) {
+    public Ticket(Integer id, String name) {
         this.id = id;
-        this.lastName = lastName;
+        this.name = name;
     }
 
-    public Boolean getSingleRoom() {
-        return singleRoom;
+
+    public String getName() {
+        return name;
     }
 
-    public void setSingleRoom(Boolean singleRoom) {
-        this.singleRoom = singleRoom;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Date getDob() {

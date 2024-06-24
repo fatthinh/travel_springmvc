@@ -50,6 +50,9 @@ public class Destination implements Serializable {
     @Size(max = 255)
     @Column(name = "thumbnail")
     private String thumbnail;
+    @Size(max = 255)
+    @Column(name = "location")
+    private String location;
     @Lob
     @Size(max = 65535)
     @Column(name = "notes")

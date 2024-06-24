@@ -6,6 +6,7 @@ package com.lpthinh.controllers;
 
 import com.lpthinh.pojo.Destination;
 import com.lpthinh.services.DestinationService;
+import java.util.HashMap;
 import java.util.Map;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,23 +32,24 @@ public class DestinationController {
     public void commonAttr(Model model) {
         model.addAttribute("addNewBtn", "#add-new-destination");
         model.addAttribute("headerTitle", "Destinations");
+        model.addAttribute("destinationObj", new Destination());
     }
 
     @RequestMapping(value = "/destinations", method = RequestMethod.GET)
     public String index(Model model, @RequestParam Map<String, String> params) {
-
         model.addAttribute("destinations", this.destinationService.getDestinations(params));
-        model.addAttribute("destinationObj", new Destination());
 
         return "destinations";
     }
 
     @RequestMapping(value = "/destinations", method = RequestMethod.POST)
-    public String create(@ModelAttribute("destinationObj") @Valid Destination destinationObj, BindingResult bindingResult) {
+    public String create(Model model, @ModelAttribute("destinationObj") @Valid Destination destinationObj, BindingResult bindingResult) {
+        model.addAttribute("destinations", this.destinationService.getDestinations(new HashMap<>()));
+
         if (!bindingResult.hasErrors()) {
             try {
                 this.destinationService.addOrUpdate(destinationObj);
-                return "redirect:/";
+                return "redirect:/destinations";
             } catch (Exception ex) {
                 System.err.println(ex.getMessage());
             }

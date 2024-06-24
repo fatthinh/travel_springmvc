@@ -20,6 +20,7 @@ import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
@@ -108,4 +109,9 @@ public class TourDetailRepositoryImpl implements TourDetailRepository {
         session.save(tourDetail);
     }
 
+    @Override
+    public void put(TourDetail tourDetail) {
+        Session session = this.factory.getObject().getCurrentSession();
+        session.update(tourDetail);
+    }
 }

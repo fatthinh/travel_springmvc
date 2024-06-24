@@ -38,5 +38,4 @@ public class CategoryRepositoryImpl implements CategoryRepository {
         Session session = this.factory.getObject().getCurrentSession();
         return session.get(Category.class, id);
     }
-
 }

@@ -5,6 +5,7 @@
 package com.lpthinh.services;
 
 import com.lpthinh.pojo.Activity;
+import com.lpthinh.pojo.TourDetail;
 import java.util.List;
 import java.util.Map;
 

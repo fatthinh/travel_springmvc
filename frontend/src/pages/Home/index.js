@@ -13,7 +13,6 @@ import TourSlide from '~/components/TourSlide';
 import CountUp from 'react-countup';
 import ScrollTrigger from 'react-scroll-trigger';
 import BlogHome from '~/components/BlogHome';
-import Partners from '~/components/Partners';
 
 const Home = () => {
       const [countStart, setCountStart] = useState(false);

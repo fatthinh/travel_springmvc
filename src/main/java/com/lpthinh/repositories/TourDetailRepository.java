@@ -26,4 +26,6 @@ public interface TourDetailRepository {
     TourDetail getTourById(int id);
 
     void create(TourDetail tourDetail);
+
+    void put(TourDetail tourDetail);
 }

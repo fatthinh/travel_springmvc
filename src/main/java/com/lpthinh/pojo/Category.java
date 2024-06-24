@@ -122,7 +122,7 @@ public class Category implements Serializable {
 
     @Override
     public String toString() {
-        return "com.lpthinh.pojo.Category[ id=" + id + " ]";
+        return this.name;
     }
 
 }

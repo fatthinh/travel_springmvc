@@ -5,6 +5,7 @@
 package com.lpthinh.services.impl;
 
 import com.lpthinh.pojo.Activity;
+import com.lpthinh.pojo.TourDetail;
 import com.lpthinh.repositories.ActivityRepository;
 import com.lpthinh.services.ActivityService;
 import java.util.List;
@@ -18,24 +19,22 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class ActivityServiceImpl implements ActivityService {
-    
+
     @Autowired
     private ActivityRepository activityRepository;
 
-    
     @Override
     public List<Activity> getActivities(Map<String, String> params) {
         return this.activityRepository.getActivities(params);
     }
-    
+
     @Override
     public Activity getActivityById(int id) {
         return this.activityRepository.getActivityById(id);
     }
-    
+
     @Override
     public void create(Activity activity) {
         this.activityRepository.create(activity);
     }
-    
 }

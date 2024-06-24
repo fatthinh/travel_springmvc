@@ -23,6 +23,14 @@
         <put-attribute name="imageGallery" value="/WEB-INF/galleries/images.jsp" />
     </definition>
     
+    <definition name="tour-detail" extends="baseLayout">
+        <put-attribute name="title" value="Tour Detail" />
+        <put-attribute name="content" value="/WEB-INF/pages/tourDetails.jsp" />
+        <put-attribute name="modal" value="/WEB-INF/modals/tour_detail_edit.jsp" />
+        <put-attribute name="activityGallery" value="/WEB-INF/galleries/activities_edit.jsp" />
+        <put-attribute name="imageGallery" value="/WEB-INF/galleries/images_edit.jsp" />
+    </definition>
+    
     <definition name="tours" extends="baseLayout">
         <put-attribute name="title" value="Tours" />
         <put-attribute name="content" value="/WEB-INF/pages/tours.jsp" />
