@@ -27,14 +27,14 @@ const TourFilter = () => {
             }
       }, [location.state.filteredTour]);
 
-      // console.log(userInput)
-
       const recordsPerPage = 3;
       const lastIndex = currentPage * recordsPerPage;
       const firstIndex = lastIndex - recordsPerPage;
       const records = data.slice(firstIndex, lastIndex);
       const nPages = Math.ceil(data.length / recordsPerPage);
       const numberOfPages = [...Array(nPages + 1).keys()].slice(1);
+
+      console.log(records);
 
       const afterdiscount = (item) => {
             const discountAmount = (item.discount / 100) * item.price;
@@ -71,7 +71,7 @@ const TourFilter = () => {
                                           records.map((item, index) => (
                                                 <Col key={index} lg={4} className="mb-5 pb-4 pt-3 card__col">
                                                       <div className="img__con mb-3">
-                                                            <img className="w-100" src={item.thumbnail} />
+                                                            <img className="w-100" style={{height: 340}} src={item.thumbnail} />
                                                       </div>
                                                       <div className="desc ">
                                                             {item.discount ? (
@@ -85,20 +85,12 @@ const TourFilter = () => {
                                                             <h4 className="name">{item.name}</h4>
                                                             <div className="duration d-flex align-items-center gap-3 mb-4">
                                                                   <i className="bi bi-clock" />
-                                                                  <p>{`${item.duration.days} Days / ${item.duration.night} Nights`}</p>
+                                                                  <p>{`${item.tourActivityCollection.length} Days / ${
+                                                                        item.tourActivityCollection.length + 1
+                                                                  } Nights`}</p>
                                                             </div>
-                                                            <div className="inclusion">
-                                                                  <h4>Included Package Facility:</h4>
-                                                                  <ul className="d-flex flex-column">
-                                                                        {item.included.map((includ, index) => (
-                                                                              <li key={index}>
-                                                                                    <i className="bi bi-check-lg" />
-                                                                                    {includ}
-                                                                              </li>
-                                                                        ))}
-                                                                  </ul>
-                                                            </div>
-                                                            <LinkContainer to={`/tour/${item.id}`}>
+                                                          
+                                                            <LinkContainer to={`/tour-detail/${item.id}`}>
                                                                   <Button className="find__now mt-4">
                                                                         <div>
                                                                               <span className="transition" />

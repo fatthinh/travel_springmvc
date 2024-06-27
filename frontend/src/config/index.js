@@ -1,9 +1,12 @@
 import routes from './routes';
-const BASE_URL = 'http://localhost:8082/project/api';
+import { BASE_URL, endpoints, axiosConfig, axiosConfigWithAuth } from './api';
 
 const config = {
       routes,
       BASE_URL,
+      endpoints,
+      axiosConfig,
+      axiosConfigWithAuth
 };
 
 export default config;

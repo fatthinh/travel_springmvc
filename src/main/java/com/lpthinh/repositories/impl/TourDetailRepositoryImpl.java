@@ -55,7 +55,12 @@ public class TourDetailRepositoryImpl implements TourDetailRepository {
 
         String kw = params.get("kw");
         if (kw != null && !kw.trim().isEmpty()) {
-            predicates.add(builder.like(root.get("name"), String.format("%%s%%", kw)));
+            predicates.add(builder.like(root.get("name"), "%" + kw + "%"));
+        }
+
+        String destination = params.get("destination");
+        if (destination != null && !destination.trim().isEmpty() && !destination.equals("all")) {
+            predicates.add(builder.like(root.get("destination").get("name"), "%" + destination + "%"));
         }
 
         criteriaQuery.where(predicates.toArray(Predicate[]::new));
@@ -63,7 +68,8 @@ public class TourDetailRepositoryImpl implements TourDetailRepository {
 
         String page = params.get("page");
         if (page != null && !page.isEmpty()) {
-            int pageSize = Integer.parseInt(environment.getProperty("pageSize").toString());
+//            int pageSize = Integer.parseInt(environment.getProperty("pageSize").toString());
+            int pageSize = 2;
             int start = (Integer.parseInt(page) - 1) * pageSize;
             query.setFirstResult(start);
             query.setMaxResults(pageSize);

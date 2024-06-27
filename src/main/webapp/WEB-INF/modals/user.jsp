@@ -6,81 +6,84 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!-- Modal: new user -->
 <div id="add-new-user" class="modal hide">
     <div class="modal__content" style="background-color: #fff; width: 650px">
-        <form action="<c:url value='/users' />" class="form" method="post" modelAttribute="user">
+
+        <c:url value="/users" var="action"/>
+        <form:form action="${action}" class="form" method="post" modelAttribute="userObj">
             <h2 class="modal__heading">Add new user</h2>
             <div class="modal__body">
                 <div class="form__row">
                     <div class="form__group">
-                        <label for="first-name-modal" class="form__label form__label--small"
+                        <label for="first-name" class="form__label form__label--small"
                                >First name</label
                         >
-                        <div class="form__text-input form__
-                                type="text"
-                                name="firstName"
-                                id="first-name-modal"
+                        <div class="form__text-input form__text-input--small">
+                            <form:input 
+                                path="firstName"
+                                id="first-name"
                                 placeholder="First name"
                                 class="form__input"
-                                required
+                                required="true"
                                 minlength="2"
                                 />
-                        </div>text-input--small">
-                            <input
+                        </div>
+
                         <p class="form__error">
                             First name must be at least 2 characters
                         </p>
                     </div>
                     <div class="form__group">
-                        <label for="last-name-modal" class="form__label form__label--small"
+                        <label for="last-name" class="form__label form__label--small"
                                >Last name</label
                         >
                         <div class="form__text-input form__text-input--small">
-                            <input
-                                type="text"
-                                name="lastName"
+                            <form:input
+                                path="lastName"
                                 placeholder="Last name"
-                                id="last-name-modal"
+                                id="last-name"
                                 class="form__input"
-                                required
+                                required="true"
                                 minlength="2"
                                 />
                         </div>
                         <p class="form__error">
-                            Last name must be at least 11 characters
+                            Last name must be at least 2 characters
                         </p>
                     </div>
 
                     <div class="form__group">
-                        <label for="role-modal" class="form__label form__label--small"
+                        <label for="role" class="form__label form__label--small"
                                >Role</label
                         >
                         <div class="form__text-input form__text-input--small">
                             <input
                                 type="text"
-                                name="role"
                                 placeholder="Role"
-                                id="role-modal"
+                                id="roleDisplay"
                                 readonly
                                 class="form__input js-toggle"
-                                toggle-target="#role-modal-dialog"
+                                toggle-target="#role-dialog"
+                                required
                                 />
+
+                            <form:input 
+                                path="role"
+                                id="role"
+                                hidden="true"
+                                />
+
                             <div
-                                id="role-modal-dialog"
+                                id="role-dialog"
                                 class="form__select-dialog bottom hide"
-                                style="left: 0; bottom: -87px"
+                                style="left: 0; bottom: -148px"
                                 >
-                                <h2 class="form__dialog-heading d-none d-sm-block">Role</h2>
-                                <button
-                                    class="form__close-dialog d-none d-sm-block js-toggle"
-                                    toggle-target="#role-modal-dialog"
-                                    >
-                                    &times
-                                </button>
-                                <ul class="form__options-list">
-                                    <li class="form__option">Receptionist</li>
-                                    <li class="form__option">Cashier</li>
+                                <ul class="form__options-list" data-name="role">
+                                    <li class="form__option" data-id="RECEPTIONIST">Receptionist</li>
+                                    <li class="form__option" data-id="CASHIER">Cashier</li>
+                                    <li class="form__option" data-id="CUSTOMER">Customer</li>
                                 </ul>
                             </div>
                         </div>
@@ -90,17 +93,17 @@
 
                 <div class="form__row">
                     <div class="form__group">
-                        <label for="phone-modal" class="form__label form__label--small"
+                        <label for="phone" class="form__label form__label--small"
                                >Phone</label
                         >
                         <div class="form__text-input form__text-input--small">
-                            <input
+                            <form:input
                                 type="tel"
-                                name="phone"
-                                id="phone-modal"
+                                path="phone"
+                                id="phone"
                                 placeholder="Phone"
                                 class="form__input"
-                                required
+                                required="true"
                                 minlength="11"
                                 />
                         </div>
@@ -108,18 +111,17 @@
                     </div>
 
                     <div class="form__group">
-                        <label for="email-modal" class="form__label form__label--small"
+                        <label for="email" class="form__label form__label--small"
                                >Email</label
                         >
                         <div class="form__text-input form__text-input--small">
-                            <input
+                            <form:input
                                 type="email"
-                                name="email"
+                                path="email"
                                 placeholder="Email"
-                                id="email-modal"
+                                id="email"
                                 class="form__input"
-                                required
-                                minlength="2"
+                                required="true"
                                 />
                         </div>
                         <p class="form__error">Example: lastname@gmail.com</p>
@@ -131,32 +133,34 @@
                            >Password</label
                     >
                     <div class="form__text-input form__text-input--small">
-                        <input
+                        <form:input
                             type="password"
-                            name="password"
+                            path="password"
                             placeholder="Password"
                             id="password"
                             class="form__input"
-                            required
-                            minlength="2"
+                            required="true"
+                            minlength="8"
                             />
                     </div>
-                    <p class="form__error">Example: lastname@gmail.com</p>
+                    <p class="form__error">Password length must be at least 8</p>
                 </div>
                 <div class="form__group">
-                    <label for="address-modal" class="form__label form__label--small"
-                           >Address</label
+                    <label for="confirm-password" class="form__label form__label--small"
+                           >Confirm password</label
                     >
-                    <div class="form__text-area">
-                        <textarea
-                            name="address"
-                            id="address-modal"
-                            placeholder="Address"
-                            class="form__text-area-input"
-                            required
-                            ></textarea>
+                    <div class="form__text-input form__text-input--small">
+                        <form:input
+                            type="password"
+                            path="confirmPassword"
+                            placeholder="Confirm password"
+                            id="confirm-password"
+                            class="form__input"
+                            required="true"
+                            minlength="8"
+                            />
                     </div>
-                    <p class="form__error">address not empty</p>
+                    <p class="form__error">Password length must be at least 8</p>
                 </div>
             </div>
 
@@ -167,31 +171,14 @@
                     >
                     Cancel
                 </button>
-                <button
+                <form:button
                     class="btn btn--small btn--primary modal__btn btn--no-margin"
+                    type="submit"
                     >
                     Create
-                </button>
+                </form:button>
             </div>
-        </form>
+        </form:form>
     </div>
     <div class="modal__overlay"></div>
 </div>
-
-<script>
-    const roles = document.querySelectorAll("#role-modal-dialog .form__option");
-    const roleInput = document.getElementById("role-modal");
-
-    roles.forEach(role => {
-        role.addEventListener("click", () => {
-            roles.forEach(option => {
-                option.classList.remove("form__option--current");
-            });
-
-            role.classList.add("form__option--current");
-
-            const selectedRole = role.textContent;
-            roleInput.value = selectedRole;
-        });
-    });
-</script>

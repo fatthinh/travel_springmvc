@@ -17,8 +17,8 @@ import org.springframework.format.Formatter;
 public class CategoryFormatter implements Formatter<Category> {
 
     @Override
-    public String print(Category destination, Locale locale) {
-        return String.valueOf(destination.getId());
+    public String print(Category category, Locale locale) {
+        return String.valueOf(category.getId());
     }
 
     @Override

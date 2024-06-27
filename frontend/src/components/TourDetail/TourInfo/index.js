@@ -4,11 +4,6 @@ import React from 'react';
 import { Col, Row } from 'react-bootstrap';
 
 const TourInfo = ({ tourdetails, tourplan, tourGallery }) => {
-      // const afterdiscount = () => {
-      //       const discountAmount = (tourdetails.discount / 100) * tourdetails.price;
-      //       return tourdetails.price - discountAmount;
-      // };
-
       return (
             <main className="tour__info">
                   <section className="price d-flex align-items-center gap-2 py-2">

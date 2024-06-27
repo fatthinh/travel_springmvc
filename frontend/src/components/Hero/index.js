@@ -1,7 +1,7 @@
 import React from 'react';
 import './hero.scss';
 import { Button } from 'react-bootstrap';
-import { LinkContainer } from 'react-router-bootstrap';
+import { Link } from 'react-router-dom';
 
 const Hero = () => {
       return (
@@ -19,12 +19,12 @@ const Hero = () => {
                         <h1>The Best Way to Plan Your Trip Around The World.</h1>
                         <p>Treat yourself with a journey to your inner self.</p>
                         <Button>
-                              <LinkContainer to={'/tours'}>
+                              <Link to={'/tours'}>
                                     <div>
                                           <span className="transition" />
                                           <span className="label">Discover More</span>
                                     </div>
-                              </LinkContainer>
+                              </Link>
                         </Button>
                   </div>
                   <div className="right__hero">

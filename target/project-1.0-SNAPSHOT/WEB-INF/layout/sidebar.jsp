@@ -61,12 +61,10 @@
                 alt="Account"
                 />
         </div>
-        <div class="account-info-name">Thinh Lam</div>
-        <button class="account-info-more">
-            <i
-                class="bx bx-dots-horizontal-rounded"
-                style="font-size: 24px"
-                ></i>
-        </button>
+        <div class="account-info-name">${pageContext.request.userPrincipal.name}</div>
+
     </div>
+    <a href="<c:url value="/logout" />" class="btn btn-primary">
+        <i class='bx bx-log-out' style="font-size: 24px; line-height: 38px"></i>
+    </a>
 </div>

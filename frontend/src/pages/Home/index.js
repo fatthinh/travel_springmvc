@@ -7,7 +7,6 @@ import PopularTour from '~/components/PopularTour';
 import DealHome from '~/components/DealHome';
 import Heading from '~/components/Heading';
 import DestinationHome from '~/components/DestinationHome';
-// import FqaForm from '~/components/FqaForm';
 import Parralax from '~/components/Paralax';
 import TourSlide from '~/components/TourSlide';
 import CountUp from 'react-countup';
@@ -16,14 +15,15 @@ import BlogHome from '~/components/BlogHome';
 
 const Home = () => {
       const [countStart, setCountStart] = useState(false);
+
       return (
             <section className="home__sec">
                   <Hero />
                   <Filter />
                   <Heading title="TRAVEL CATEGORY" subtitle="Our Popular Tours Type" />
                   <PopularTour />
-                  <Heading title="DEALS & OFFER" subtitle="Amazing Deals!" />
-                  <DealHome />
+                  {/* <Heading title="DEALS & OFFER" subtitle="Amazing Deals!" />
+                  <DealHome /> */}
                   <Heading title="DESTINATION" subtitle="Your Desired Destination" />
                   <DestinationHome />
                   <Parralax />

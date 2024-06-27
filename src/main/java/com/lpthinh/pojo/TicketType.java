@@ -4,6 +4,7 @@
  */
 package com.lpthinh.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Collection;
 import javax.persistence.Basic;
@@ -54,6 +55,7 @@ public class TicketType implements Serializable {
     @Column(name = "deduction")
     private Float deduction;
     @OneToMany(mappedBy = "ticketType")
+    @JsonIgnore
     private Collection<Ticket> ticketCollection;
 
     public TicketType() {

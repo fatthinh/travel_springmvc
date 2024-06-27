@@ -4,14 +4,11 @@
  */
 package com.lpthinh.controllers;
 
-import com.lpthinh.pojo.Booking;
 import com.lpthinh.services.BookingService;
-import jakarta.validation.Valid;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -39,23 +36,19 @@ public class BookingController {
     public String bookings(Model model,
             @RequestParam Map<String, String> params) {
 
-//        if (!params.containsKey("page")) {
-//            params.put("page", "1");
-//        }
         model.addAttribute("bookings", this.bookingService.getBookings(params));
         return "bookings";
     }
 
-    @RequestMapping(path = "/bookings", method = RequestMethod.POST)
-    public String createBooking(@ModelAttribute(value = "booking") @Valid Booking booking, BindingResult bindingResult) {
-        if (!bindingResult.hasErrors())
-            try {
-            this.bookingService.addBooking(booking);
-            return "redirect:/";
-        } catch (Exception e) {
-            System.err.println(e.getMessage());
-        }
-        return "bookings";
-    }
-
+//    @RequestMapping(path = "/bookings", method = RequestMethod.POST)
+//    public String createBooking(@ModelAttribute(value = "booking") @Valid Booking booking, BindingResult bindingResult) {
+//        if (!bindingResult.hasErrors())
+//            try {
+//            this.bookingService.addBooking(booking);
+//            return "redirect:/";
+//        } catch (Exception e) {
+//            System.err.println(e.getMessage());
+//        }
+//        return "bookings";
+//    }
 }

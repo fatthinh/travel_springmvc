@@ -60,8 +60,7 @@ public class Customer implements Serializable {
     @Column(name = "dob")
     @Temporal(TemporalType.DATE)
     private Date dob;
-    // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
-    @Size(max = 50)
+    @Size(max = 100)
     @Column(name = "email")
     private String email;
     // @Pattern(regexp="^\\(?(\\d{3})\\)?[- ]?(\\d{3})[- ]?(\\d{4})$", message="Invalid phone/fax format, should be as xxx-xxx-xxxx")//if the field contains phone or fax number consider using this annotation to enforce field validation
@@ -83,10 +82,12 @@ public class Customer implements Serializable {
         this.id = id;
     }
 
-    public Customer(Integer id, String lastName, String phone) {
-        this.id = id;
+    public Customer(String firstName, String lastName, String phone, String email, String address) {
         this.lastName = lastName;
         this.phone = phone;
+        this.firstName = firstName;
+        this.email = email;
+        this.address = address;
     }
 
     public Integer getId() {
@@ -178,5 +179,5 @@ public class Customer implements Serializable {
     public String toString() {
         return "com.lpthinh.pojo.Customer[ id=" + id + " ]";
     }
-    
+
 }

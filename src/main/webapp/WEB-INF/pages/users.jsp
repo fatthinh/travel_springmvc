@@ -19,7 +19,7 @@
         <div class="product-cell">Name</div>
         <div class="product-cell">Email</div>
         <div class="product-cell">Phone</div>
-        <div class="product-cell">Adress</div>
+        <div class="product-cell">Role</div>
     </div>
     <c:forEach items="${users}" var="user">
         <div class="products-row">
@@ -28,7 +28,7 @@
             </button>
 
             <div class="product-cell image">
-                <button onclick="onClickUser(${user.getId()}, event)">
+                <a href='<c:url value="/users/${user.getId()}" />'>
                     <img
                         <c:choose>
                             <c:when test="${user.getAvatar() == null}">
@@ -40,7 +40,7 @@
                         </c:choose>
                         alt="avatar"
                         />
-                </button>
+                </a>
             </div>
             <div class="product-cell">
                 <span class="cell-label">Name:</span>${user.getFirstName()} ${user.getLastName()}
@@ -52,40 +52,11 @@
                 <span class="cell-label">Phone:</span>${user.getPhone()}
             </div>
             <div class="product-cell">
-                <span class="cell-label">Address</span>${user.getAddress()}
+                <span class="cell-label"></span>${user.getRole()}
             </div>
         </div>
     </c:forEach>
 </div>
-<script>
-    const onClickUser = async (id, event) => {
-        const url = "http://localhost:8080/project/api/users/" + id + "/";
-        const user = await fetch(url).then(res => res.json());
-        const firstName = document.querySelector("#first-name"),
-                lastName = document.querySelector("#last-name"),
-                email = document.querySelector("#email-adress"),
-                phone = document.querySelector("#phone-number"),
-                role = document.querySelector("#role"),
-                address = document.querySelector("#address");
-        if (user) {
-            firstName.value = user.firstName;
-            lastName.value = user.lastName;
-            role.value = user.role;
-            email.value = user.email;
-            address.value = user.address;
-            phone.value = user.phone;
-        }
-
-        const target = event.target.closest("#user-list");
-        const detail = document.querySelector("#user-detail");
-        const isHidden = target.classList.contains("hide");
-        requestAnimationFrame(() => {
-            target.classList.toggle("hide", !isHidden);
-            target.classList.toggle("show", isHidden);
-            detail.classList.toggle("hide", isHidden);
-            detail.classList.toggle("show", !isHidden);
-        });
-    };</script>
 
 <script>
     // basic paging logic to demo the buttons

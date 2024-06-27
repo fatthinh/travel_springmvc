@@ -7,13 +7,23 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
+
 <section class="single__page py-5 overflow-auto">
     <div class="container">
         <div class="row">
             <div class="col-12">
                 <section class="single__bio">
                     <main class="tour__info" style="font-size: 18px">
+                        <section>
+                            <a href="<c:url value="/tours"/>" class="btn btn-outline-primary d-flex align-items-center">
+                                <i
+                                    class="bx bx-left-arrow-alt"
+                                    ></i>
+                                <span>Back</span>
+                            </a>
+                        </section>
                         <section class="price d-flex align-items-center gap-2 py-2">
+
                             <h2>$${tourdetails.getPrice()}</h2>
                             <p>(Per Person)</p>
                         </section>

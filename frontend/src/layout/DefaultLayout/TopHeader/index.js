@@ -4,8 +4,13 @@ import { Col, Container, Row } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faClock } from '@fortawesome/free-regular-svg-icons';
 import { faLocationDot } from '@fortawesome/free-solid-svg-icons';
+import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { authSelector } from '~/redux/selectors';
 
 const TopHeader = () => {
+      const currentUser = useSelector(authSelector);
+
       return (
             <section className="top__header__sec d-none d-xl-block">
                   <Container>
@@ -19,7 +24,11 @@ const TopHeader = () => {
                                     </div>
                               </Col>
                               <Col xl={2} className="d-flex justify-content-end">
-                                    <a>My Account</a>
+                                    {currentUser ? (
+                                          <Link to="/profile">My account</Link>
+                                    ) : (
+                                          <Link to="/login">Login</Link>
+                                    )}
                               </Col>
                         </Row>
                   </Container>

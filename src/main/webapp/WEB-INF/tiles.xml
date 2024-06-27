@@ -9,18 +9,18 @@
         <put-attribute name="sidebar" value="/WEB-INF/layout/sidebar.jsp" />
         <put-attribute name="content" value="" />
         <put-attribute name="modal" value="" />
-        <put-attribute name="detail" value="" />
         <put-attribute name="actions" value="" />
         <put-attribute name="activityGallery" value="" />
         <put-attribute name="imageGallery" value="" />
     </definition>
-
+    
     <definition name="tours-detail" extends="baseLayout">
         <put-attribute name="title" value="Tours Detail" />
         <put-attribute name="content" value="/WEB-INF/pages/index.jsp" />
         <put-attribute name="modal" value="/WEB-INF/modals/tour_detail.jsp" />
         <put-attribute name="activityGallery" value="/WEB-INF/galleries/activities.jsp" />
         <put-attribute name="imageGallery" value="/WEB-INF/galleries/images.jsp" />
+        <put-attribute name="actions" value="/WEB-INF/actions/tourDetail.jsp" />
     </definition>
     
     <definition name="tour-detail" extends="baseLayout">
@@ -41,9 +41,13 @@
         <put-attribute name="title" value="Users" />
         <put-attribute name="content" value="/WEB-INF/pages/users.jsp" />
         <put-attribute name="modal" value="/WEB-INF/modals/user.jsp" />
-        <put-attribute name="content" value="/WEB-INF/pages/users.jsp" />
-        <put-attribute name="detail" value="/WEB-INF/pages/userDetails.jsp" />
         <put-attribute name="actions" value="/WEB-INF/actions/user.jsp" />
+    </definition>
+    
+    <definition name="userDetail" extends="baseLayout">
+        <put-attribute name="title" value="Detail" />
+        <put-attribute name="content" value="/WEB-INF/pages/userDetails.jsp" />
+        <put-attribute name="modal" value="/WEB-INF/modals/user.jsp" />
     </definition>
         
     <definition name="bookings" extends="baseLayout">
@@ -62,5 +66,8 @@
         <put-attribute name="title" value="Activities" />
         <put-attribute name="content" value="/WEB-INF/pages/activities.jsp" />
         <put-attribute name="modal" value="/WEB-INF/modals/activity.jsp" />
+    </definition>
+    
+    <definition name="loginPage" template="/WEB-INF/pages/login.jsp" >
     </definition>
 </tiles-definitions>

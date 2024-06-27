@@ -48,7 +48,7 @@ public class ApiTourDetailController {
     @GetMapping(path = "/tour-detail/{tourId}/", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<TourDetail> retrieve(@PathVariable(value = "tourId") int id) {
         TourDetail tour = this.tourDetailService.getTourById(id);
-
+        
         return new ResponseEntity<>(tour, HttpStatus.OK);
     }
 

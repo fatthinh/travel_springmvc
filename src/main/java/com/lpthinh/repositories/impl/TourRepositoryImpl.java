@@ -77,4 +77,10 @@ public class TourRepositoryImpl implements TourRepository {
         Session session = this.factory.getObject().getCurrentSession();
         session.save(tour);
     }
+
+    @Override
+    public Tour getTourById(int id) {
+        Session session = this.factory.getObject().getCurrentSession();
+        return session.get(Tour.class, id);
+    }
 }

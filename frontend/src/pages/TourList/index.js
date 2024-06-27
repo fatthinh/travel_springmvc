@@ -1,18 +1,18 @@
 import React, { useState } from 'react';
 import './tourlist.scss';
-import { tourcat, destination } from '~/data/category';
 import { Accordion, Button, Col, Container, Dropdown, Form, Row } from 'react-bootstrap';
 import PageBanner from '~/components/PageBanner';
 import Slider from '@mui/material/Slider';
 import Drop from '~/components/Drop';
-import { LinkContainer } from 'react-router-bootstrap';
-import useFetch from '~/hooks/useFetch';
-import config from '~/config';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck } from '@fortawesome/free-solid-svg-icons';
+import { useSelector } from 'react-redux';
+import { commonSelector } from '~/redux/selectors';
+import { Link } from 'react-router-dom';
 
 const TourList = () => {
-      const { data: tour, loading, error } = useFetch(`${config.BASE_URL}/tour-detail/`);
+      const { tours, destinationsFilter, categories } = useSelector(commonSelector);
+
       const [searchTerm, setSearchTerm] = useState('');
       const [value, setValue] = useState([0, 1000]);
       const [selectedDest, setSelectedDest] = useState({
@@ -21,8 +21,6 @@ const TourList = () => {
       });
 
       const [checked, setChecked] = useState([]);
-
-      const capitalizedcat = tourcat.map((cat) => cat.charAt(0).toUpperCase() + cat.slice(1));
 
       const handleChange = (event, newValue) => {
             setValue(newValue);
@@ -37,11 +35,11 @@ const TourList = () => {
             setSearchTerm(event.target.value);
       };
 
-      const filtereddest = tour.filter((item) => {
+      const filtereddest = tours.filter((item) => {
             if (selectedDest.dest === 'Where To') {
                   return item;
             } else {
-                  return item.Destination.toLowerCase().includes(selectedDest.dest.toLowerCase());
+                  return item.destination.name.toLowerCase().includes(selectedDest.dest.toLowerCase());
             }
       });
 
@@ -49,7 +47,7 @@ const TourList = () => {
             return item.price > value[0] && item.price < value[1];
       });
 
-      const filtered = tour.filter((item) => {
+      const filtered = tours.filter((item) => {
             return item.name.toLowerCase().includes(searchTerm.toLowerCase());
       });
 
@@ -60,7 +58,6 @@ const TourList = () => {
             });
       };
       const handleClick = (e) => {
-            // console.log(e.target.innerText)
             callback(e.target.innerText);
       };
 
@@ -74,8 +71,8 @@ const TourList = () => {
       };
       const filterCheck = filtereddest.filter((item) => {
             return checked.every((category) => {
-                  return item.category.some((itemCategory) => {
-                        return itemCategory.toLowerCase() === category.toLowerCase();
+                  return item.categoryCollection.some((itemCategory) => {
+                        return itemCategory.name.toLowerCase() === category.toLowerCase();
                   });
             });
       });
@@ -99,8 +96,6 @@ const TourList = () => {
             : pricerange.length > 0
             ? pricerange
             : filtereddest;
-
-      console.log(`tours: ${toursToDisplay}`);
 
       return (
             <section className="tour__page">
@@ -177,7 +172,9 @@ const TourList = () => {
                                                                               </Dropdown.Item>
 
                                                                               <Drop
-                                                                                    category={destination}
+                                                                                    category={destinationsFilter.map(
+                                                                                          (item) => item.name,
+                                                                                    )}
                                                                                     callback={callback}
                                                                               />
                                                                         </Dropdown.Menu>
@@ -203,7 +200,7 @@ const TourList = () => {
                                                             <h2>Tour Type</h2>
                                                             <div>
                                                                   <Form>
-                                                                        {capitalizedcat.map((item, index) => (
+                                                                        {categories.map((item, index) => (
                                                                               <div className="mb-3" key={index}>
                                                                                     <Form.Check
                                                                                           type="checkbox"
@@ -264,7 +261,7 @@ const TourList = () => {
 
                                                                                                 <Drop
                                                                                                       category={
-                                                                                                            destination
+                                                                                                            destinationsFilter
                                                                                                       }
                                                                                                       callback={
                                                                                                             callback
@@ -295,7 +292,7 @@ const TourList = () => {
                                                                               <h2>Tour Type</h2>
                                                                               <div>
                                                                                     <Form>
-                                                                                          {capitalizedcat.map(
+                                                                                          {categories.map(
                                                                                                 (item, index) => (
                                                                                                       <div
                                                                                                             className="mb-3"
@@ -349,15 +346,19 @@ const TourList = () => {
                                     <Col lg={8} className="py-5">
                                           <section className="tour__right d-flex flex-column gap-4">
                                                 {(checked && !filterCheck.length) ||
-                                                filtered.length == 0 ||
+                                                filtered.length === 0 ||
                                                 !filtereddest ||
-                                                pricerange.length == 0 ? (
+                                                pricerange.length === 0 ? (
                                                       <h1>Not Found</h1>
                                                 ) : (
                                                       toursToDisplay.map((item, index) => (
                                                             <Row key={index} className="card__con p-3">
                                                                   <Col lg={6} className="left__card">
-                                                                        <img className="w-100" src={item.thumbnail} />
+                                                                        <img
+                                                                              className="w-100"
+                                                                              src={item.thumbnail}
+                                                                              style={{ height: 340 }}
+                                                                        />
                                                                   </Col>
                                                                   <Col lg={6} className="right__card">
                                                                         <h2>{item.name}</h2>
@@ -400,7 +401,7 @@ const TourList = () => {
                                                                                     </li>
                                                                               </ul>
                                                                         </div>
-                                                                        <LinkContainer to={`/tour-detail/${item.id}`}>
+                                                                        <Link to={`/tour-detail/${item.id}`}>
                                                                               <Button className="find__now mt-4">
                                                                                     <div>
                                                                                           <span className="transition" />
@@ -409,7 +410,7 @@ const TourList = () => {
                                                                                           </span>
                                                                                     </div>
                                                                               </Button>
-                                                                        </LinkContainer>
+                                                                        </Link>
                                                                   </Col>
                                                             </Row>
                                                       ))

@@ -4,6 +4,7 @@
  */
 package com.lpthinh.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
@@ -37,6 +38,10 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Invoice implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    public static final String PENDING = "PENDING";
+    public static final String PAID = "PAID";
+    public static final String UNPAID = "UNPAID";
+
     @Id
     @Basic(optional = false)
     @NotNull
@@ -50,18 +55,24 @@ public class Invoice implements Serializable {
     private Double amount;
     @JoinColumn(name = "id", referencedColumnName = "id", insertable = false, updatable = false)
     @OneToOne(optional = false)
+    @JsonIgnore
     private Booking booking;
     @JoinColumn(name = "cashier", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = true)
+    @JsonIgnore
     private User cashier;
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "invoice")
+    @JsonIgnore
     private BillTransaction billTransaction;
 
     public Invoice() {
     }
 
-    public Invoice(Integer id) {
-        this.id = id;
+    public Invoice(Booking booking, double amount) {
+        this.id = booking.getId();
+        this.booking = booking;
+        this.amount = amount;
+        this.createdAt = new Date();
     }
 
     public Integer getId() {
@@ -136,5 +147,5 @@ public class Invoice implements Serializable {
     public String toString() {
         return "com.lpthinh.pojo.Invoice[ id=" + id + " ]";
     }
-    
+
 }

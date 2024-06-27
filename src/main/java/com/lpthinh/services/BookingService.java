@@ -5,6 +5,8 @@
 package com.lpthinh.services;
 
 import com.lpthinh.pojo.Booking;
+import com.lpthinh.pojo.BookingDTO;
+import com.lpthinh.pojo.Invoice;
 import java.util.List;
 import java.util.Map;
 
@@ -16,5 +18,5 @@ public interface BookingService {
 
     List<Booking> getBookings(Map<String, String> params);
 
-    void addBooking(Booking booking);
+    Invoice addBooking(BookingDTO bookingInfo);
 }

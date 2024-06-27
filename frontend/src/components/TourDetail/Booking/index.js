@@ -3,19 +3,23 @@ import { Button } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRight, faMinusCircle, faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 import './booking.scss';
-import { useNavigate } from 'react-router-dom';
+import useFetch from '~/hooks/useFetch';
+import config from '~/config';
+import { useDispatch, useSelector } from 'react-redux';
+import { bookingSelector } from '~/redux/selectors';
+import bookingSlice from '~/redux/slices/bookingSlice';
 
-const Booking = ({ tourdetails, tourAvailable, tourPlan }) => {
+const Booking = ({ tourdetails, tourAvailable, tourPlan, checkoutVisible, toggleCheckoutVisible }) => {
+      const dispatch = useDispatch();
+
       const [adult, setAdult] = useState(1);
       const [child, setChild] = useState(0);
       const [totalPrice, setTotalPrice] = useState();
       const [selectedTour, setSelectedTour] = useState();
-      const navigate = useNavigate();
+      const { data: ticketTypes } = useFetch(`${config.BASE_URL}/${config.endpoints['ticket-types']}`);
 
       const afterdiscount = () => {
-            const price = tourdetails.price;
-            const discountAmount = (selectedTour?.discount / 100) * price;
-            return price - discountAmount;
+            return tourdetails.price * (1 - selectedTour?.discount);
       };
 
       const handleIncrement = () => {
@@ -44,25 +48,30 @@ const Booking = ({ tourdetails, tourAvailable, tourPlan }) => {
 
       const total = () => {
             const adultPrice = adult * afterdiscount();
-            const childPrice = child * afterdiscount() * 0.3;
+            const childPrice = child * afterdiscount() * (1 - ticketTypes[1]?.deduction);
             const totalPrice = adultPrice + childPrice;
-            if (totalPrice) setTotalPrice(totalPrice);
+            if (totalPrice) setTotalPrice(totalPrice.toFixed(2));
       };
 
       useEffect(() => {
+            dispatch(bookingSlice.actions.setAdults(adult));
+            dispatch(bookingSlice.actions.setChildren(child));
+            dispatch(bookingSlice.actions.setTourId(selectedTour?.id));
+
             total();
-      }, [adult, child]);
+      }, [adult, child, selectedTour]);
 
       useEffect(() => {
             total();
             setSelectedTour(tourAvailable[0]);
       }, [tourAvailable]);
 
-      const dateFormat = (time) => {
-            const date = new Date(time);
-            return `${date.getDate()}/${
-                  date.getMonth() < 10 ? '0' + date.getMonth() : date.getMonth()
-            }/${date.getFullYear()}`;
+      const formatDate = (timestamp) => {
+            const date = new Date(timestamp);
+            const day = String(date.getDate()).padStart(2, '0');
+            const month = String(date.getMonth() + 1).padStart(2, '0');
+            const year = date.getFullYear();
+            return `${day}/${month}/${year}`;
       };
 
       return (
@@ -76,7 +85,7 @@ const Booking = ({ tourdetails, tourAvailable, tourPlan }) => {
 
                               {tourAvailable.map((item, index) => {
                                     return (
-                                          <div class="inputGroup" key={index}>
+                                          <div className="inputGroup" key={index}>
                                                 <input
                                                       id={`available-${index}`}
                                                       name="available"
@@ -85,7 +94,7 @@ const Booking = ({ tourdetails, tourAvailable, tourPlan }) => {
                                                       checked={selectedTour?.departureDate === item?.departureDate}
                                                 />
                                                 <label htmlFor={`available-${index}`}>
-                                                      {dateFormat(item.departureDate)}
+                                                      {formatDate(item.departureDate)}
                                                 </label>
                                           </div>
                                     );
@@ -94,71 +103,66 @@ const Booking = ({ tourdetails, tourAvailable, tourPlan }) => {
                         <div className="check__con d-flex justify-content-between align-items-center pb-4">
                               <div className="check">
                                     <p>Departure</p>
-                                    <p>{dateFormat(selectedTour?.departureDate)}</p>
+                                    <p>{formatDate(selectedTour?.departureDate)}</p>
                               </div>
                               <FontAwesomeIcon icon={faArrowRight} className="d-none d-sm-block" />
                               <div className="check">
                                     <p>Return</p>
-                                    <p>{dateFormat(selectedTour?.departureDate + 86400000 * tourPlan.length)}</p>
+                                    <p>{formatDate(selectedTour?.departureDate + 86400000 * tourPlan.length)}</p>
                               </div>
                         </div>
                         <div className="price__main">
-                              <div className="price__con d-flex justify-content-between py-4 align-items-center">
-                                    <div className="price">
-                                          <p>
-                                                Adult: ${afterdiscount()}
-                                                {afterdiscount() == tourdetails.price
-                                                      ? ''
-                                                      : `/${(<del>${tourdetails.price}</del>)}`}
-                                          </p>
-                                    </div>
-                                    <div className="counter">
-                                          <div className="d-flex gap-3 align-items-center justify-content-between">
-                                                <a onClick={handleDecrement}>
-                                                      <FontAwesomeIcon icon={faMinusCircle} />
-                                                </a>
+                              {ticketTypes.map((item, index) => {
+                                    return (
+                                          <div
+                                                key={index}
+                                                className="price__con d-flex justify-content-between py-4 align-items-center"
+                                          >
+                                                <div className="price">
+                                                      <p>
+                                                            {item.name} : $
+                                                            {(tourdetails.price * (1 - item.deduction)).toFixed(2) *
+                                                                  (index === 0 ? adult : child)}
+                                                      </p>
+                                                </div>
+                                                <div className="counter">
+                                                      <div className="d-flex gap-3 align-items-center justify-content-between">
+                                                            <a onClick={index === 0 ? handleDecrement : handleChildDec}>
+                                                                  <FontAwesomeIcon icon={faMinusCircle} />
+                                                            </a>
 
-                                                <p>{adult}</p>
-                                                <a onClick={handleIncrement}>
-                                                      <FontAwesomeIcon icon={faPlusCircle} />
-                                                </a>
+                                                            <p>{index === 0 ? adult : child}</p>
+                                                            <a onClick={index === 0 ? handleIncrement : handleChildInc}>
+                                                                  <FontAwesomeIcon icon={faPlusCircle} />
+                                                            </a>
+                                                      </div>
+                                                </div>
                                           </div>
-                                    </div>
-                              </div>
-                              <div className="price__con d-flex justify-content-between pb-4 align-items-center">
-                                    <div className="price">
-                                          <p>Children: ${tourdetails.price * 0.3}</p>
-                                    </div>
-                                    <div className="counter">
-                                          <div className="d-flex gap-3 align-items-center justify-content-between">
-                                                <a onClick={handleChildDec}>
-                                                      <FontAwesomeIcon icon={faMinusCircle} />
-                                                </a>
-                                                <p>{child}</p>
-                                                <a onClick={handleChildInc}>
-                                                      <FontAwesomeIcon icon={faPlusCircle} />
-                                                </a>
-                                          </div>
-                                    </div>
-                              </div>
+                                    );
+                              })}
                         </div>
                         <div className="total__con text-center pt-4">
                               <p>
                                     Total Price: <span>${totalPrice}</span>
+                                    {afterdiscount() === tourdetails.price ? (
+                                          ''
+                                    ) : (
+                                          <>
+                                                /
+                                                <del>
+                                                      $
+                                                      {tourdetails.price * adult +
+                                                            tourdetails.price * child * ticketTypes[1]?.deduction}
+                                                </del>
+                                          </>
+                                    )}
                               </p>
                         </div>
                         <div className="d-flex justify-content-center pt-4">
-                              <Button
-                                    className="find__now"
-                                    onClick={() => {
-                                          navigate('/checkout', {
-                                                state: { tourdetails, adult, child, totalPrice, selectedTour },
-                                          });
-                                    }}
-                              >
+                              <Button className="find__now" onClick={toggleCheckoutVisible}>
                                     <div>
                                           <span className="transition" />
-                                          <span className="label">Book Now</span>
+                                          <span className="label">{checkoutVisible ? 'Back' : 'Book Now'}</span>
                                     </div>
                               </Button>
                         </div>

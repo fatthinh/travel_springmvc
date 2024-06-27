@@ -9,7 +9,7 @@
 <div class="app-content-actions">
     <form action="<c:url value='/users' />" style="width: 380px; display: flex; align-items: center;">
         <input class="search-bar" placeholder="Search..." type="search" name="kw"/>
-        <button class="btn btn--primary" type="submit" style="height: 100%; margin-left: 20px; padding: 2px 8px;">Search</button>
+        <button class="btn btn-primary h-50 py-2 px-4 mx-2" type="submit" >Search</button>
     </form>
     <div class="app-content-actions-wrapper">
         <div class="filter-button-wrapper">

@@ -5,6 +5,7 @@
 package com.lpthinh.repositories;
 
 import com.lpthinh.pojo.User;
+import com.lpthinh.pojo.UserDTO;
 import java.util.List;
 import java.util.Map;
 
@@ -18,5 +19,14 @@ public interface UserRepository {
 
     User getUserById(int id);
 
+    User getUserByEmail(String email);
+
     int getTotalPage();
+
+    int create(UserDTO user);
+
+    boolean auth(UserDTO user);
+
+    void updateAvatar(User user);
+
 }

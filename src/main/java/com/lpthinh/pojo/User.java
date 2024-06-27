@@ -48,6 +48,12 @@ import javax.xml.bind.annotation.XmlTransient;
 public class User implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    public static final String ADMIN = "ADMIN";
+    public static final String CUSTOMER = "CUSTOMER";
+    public static final String CASHIER = "CASHIER";
+    public static final String RECEPTIONIST = "RECEPTIONIST";
+    public static final String TOUR_GUIDE = "TOUR_GUIDE";
+
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 255)
@@ -108,11 +114,12 @@ public class User implements Serializable {
         this.id = id;
     }
 
-    public User(Integer id, String password, String role, String lastName, String phone) {
-        this.id = id;
+    public User(String password, String role, String lastName, String phone, String email, String firstName) {
         this.password = password;
         this.role = role;
         this.lastName = lastName;
+        this.firstName = firstName;
+        this.email = email;
         this.phone = phone;
     }
 

@@ -103,9 +103,9 @@
                             toggle-target="#tour-dialog"
                             />
                         <div id="tour-dialog" class="form__select-dialog hide">
-                            <h2 class="form__dialog-heading d-none d-sm-block">Tour</h2>
+                            <h2 class="form__dialog-heading d-md-none">Tour</h2>
                             <button
-                                class="form__close-dialog d-none d-sm-block js-toggle"
+                                class="form__close-dialog d-md-none js-toggle"
                                 toggle-target="#tour-dialog"
                                 >
                                 &times

@@ -1,17 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700;900&family=Work+Sans:wght@200;300;400;500;600;700&display=swap');
 
-// @media (min-width: 1400px){
-//     .container{
-//         max-width: 1350px;
-//     }
-// }
-
 :root {
       --blue: #202338;
       --bg: #bebca014;
       --white: #ffffff;
       --black: #09100d;
-      --brand: #86A8CF;
+      --brand: #86a8cf;
 
       --heading__font: 'Merriweather', serif;
       --para__font: 'Work Sans', sans-serif;
@@ -25,6 +19,13 @@ body {
       .container {
             max-width: 1207px;
       }
+}
+
+button,
+input,
+[tabindex] {
+      outline: none;
+      border: none;
 }
 
 a {

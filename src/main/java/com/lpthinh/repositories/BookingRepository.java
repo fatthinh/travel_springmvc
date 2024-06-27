@@ -5,6 +5,8 @@
 package com.lpthinh.repositories;
 
 import com.lpthinh.pojo.Booking;
+import com.lpthinh.pojo.BookingDTO;
+import com.lpthinh.pojo.Invoice;
 import java.util.List;
 import java.util.Map;
 
@@ -15,5 +17,5 @@ import java.util.Map;
 public interface BookingRepository {
 
     List<Booking> getBookings(Map<String, String> params);
-    void addBooking(Booking booking);
+    Invoice addBooking(BookingDTO bookingInfo);
 }

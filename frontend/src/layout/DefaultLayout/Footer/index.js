@@ -1,15 +1,17 @@
 import React from 'react';
 import './footer.scss';
 import { Col, Container, Row } from 'react-bootstrap';
-import { destcat } from '~/data/category';
 import images from '~/assets/images';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLocationDot, faPhone } from '@fortawesome/free-solid-svg-icons';
 import { faCopyright, faEnvelope } from '@fortawesome/free-regular-svg-icons';
 import { faFacebook, faInstagram, faPinterest, faTwitter } from '@fortawesome/free-brands-svg-icons';
+import { useSelector } from 'react-redux';
+import { commonSelector } from '~/redux/selectors';
 
 const Footer = () => {
-      const capitalizedcat = destcat.map((cat) => cat.charAt(0).toUpperCase() + cat.slice(1));
+      // const capitalizedcat = destcat.map((cat) => cat.charAt(0).toUpperCase() + cat.slice(1));
+      const { categories } = useSelector(commonSelector);
 
       return (
             <section className="footer__sec pt-5">
@@ -57,9 +59,9 @@ const Footer = () => {
                                     className="footer__info__con mb-5 mb-lg-0 justify-content-start justify-content-lg-center"
                               >
                                     <div>
-                                          <p className="footer__title">Destination</p>
+                                          <p className="footer__title">Categories</p>
                                           <ul>
-                                                {capitalizedcat.map((item, index) => (
+                                                {categories.map((item, index) => (
                                                       <li key={index}>
                                                             <a>{item}</a>
                                                       </li>

@@ -35,9 +35,9 @@
                             hidden="true"
                             />
                         <div id="tourdetail-dialog" class="form__select-dialog bottom hide">
-                            <h2 class="form__dialog-heading d-none d-sm-block">Tour detail</h2>
+                            <h2 class="form__dialog-heading d-md-none">Tour detail</h2>
                             <button
-                                class="form__close-dialog d-none d-sm-block js-toggle"
+                                class="form__close-dialog d-md-none js-toggle"
                                 toggle-target="#tourdetail-dialog"
                                 >
                                 &times

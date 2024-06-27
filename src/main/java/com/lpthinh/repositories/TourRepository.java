@@ -19,6 +19,8 @@ public interface TourRepository {
 
     List<Tour> getToursByDetail(TourDetail detail);
 
+    Tour getTourById(int id);
+
     void create(Tour tour);
 
 }

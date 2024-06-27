@@ -4,8 +4,10 @@ import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 import com.lpthinh.formatters.CategoryFormatter;
 import com.lpthinh.formatters.DestinationFormatter;
+import com.lpthinh.formatters.TicketTypeFormatter;
 import com.lpthinh.formatters.TourDetailFormatter;
-import com.lpthinh.formatters.TourFormatter;
+import javax.annotation.PostConstruct;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -16,6 +18,7 @@ import org.springframework.web.servlet.config.annotation.DefaultServletHandlerCo
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -34,6 +37,14 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
     "com.lpthinh.services"
 })
 public class WebApplicationContextConfig implements WebMvcConfigurer {
+
+    @Autowired
+    private RequestMappingHandlerAdapter requestMappingHandlerAdapter;
+
+    @PostConstruct
+    public void init() {
+        requestMappingHandlerAdapter.setIgnoreDefaultModelOnRedirect(true);
+    }
 
     @Override
     public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
@@ -63,21 +74,11 @@ public class WebApplicationContextConfig implements WebMvcConfigurer {
         return resolver;
     }
 
-    @Bean
-    public Cloudinary cloudinary() {
-        Cloudinary cloudinary
-                = new Cloudinary(ObjectUtils.asMap(
-                        "cloud_name", "dzjhqjxqj",
-                        "api_key", "743759262179546",
-                        "api_secret", "AEYz9EtFM3ZmbtoNrSCCr_LFIEM",
-                        "secure", true));
-        return cloudinary;
-    }
-
     @Override
     public void addFormatters(FormatterRegistry registry) {
         registry.addFormatter(new DestinationFormatter());
         registry.addFormatter(new CategoryFormatter());
         registry.addFormatter(new TourDetailFormatter());
+        registry.addFormatter(new TicketTypeFormatter());
     }
 }

@@ -1,7 +1,6 @@
 import React from 'react';
 import './dealhome.scss';
 import { Button, Container } from 'react-bootstrap';
-import { tour } from '~/data/tour';
 
 // Import Swiper React components
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -12,13 +11,17 @@ import 'swiper/css/navigation';
 
 // import required modules
 import { Navigation } from 'swiper/modules';
-import { LinkContainer } from 'react-router-bootstrap';
+import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { commonSelector } from '~/redux/selectors';
 
 const DealHome = () => {
-      const offers = tour.filter((item) => {
-            if (item.discount) {
-                  return item;
-            }
+      const { tours } = useSelector(commonSelector);
+      const offers = tours.filter((item) => {
+            // if (item.discount) {
+            //       return item;
+            // }
+            return item;
       });
 
       const afterdiscount = (item) => {
@@ -61,14 +64,14 @@ const DealHome = () => {
                                                       {`From $${afterdiscount(item)}/`}
                                                       <del>{item.price}</del>
                                                 </p>
-                                                <LinkContainer to={`/tour/${item.id}`}>
+                                                <Link to={`/tour/${item.id}`}>
                                                       <Button className="find__now mt-4">
                                                             <div>
                                                                   <span className="transition" />
                                                                   <span className="label">Explore Now</span>
                                                             </div>
                                                       </Button>
-                                                </LinkContainer>
+                                                </Link>
                                                 <div className="discount__con">{`${item.discount}%`}</div>
                                           </div>
                                     </SwiperSlide>

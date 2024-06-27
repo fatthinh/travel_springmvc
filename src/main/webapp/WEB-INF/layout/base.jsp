@@ -37,7 +37,6 @@
                 <tiles:insertAttribute name="actions"/>
 
                 <tiles:insertAttribute name="content" />
-                <tiles:insertAttribute name="detail" />
             </div>
         </div>
         <tiles:insertAttribute name="modal" />

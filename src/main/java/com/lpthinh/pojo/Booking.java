@@ -43,6 +43,11 @@ import javax.xml.bind.annotation.XmlTransient;
 public class Booking implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    public static final String PENDING = "PENDING";
+    public static final String COMPLETED = "COMPLETED";
+    public static final String CANCELED = "CANCELED";
+    public static final String REFUNDED = "REFUNDED";
+
     @Size(max = 7)
     @Column(name = "status")
     private String status;
@@ -64,7 +69,7 @@ public class Booking implements Serializable {
     @ManyToOne(optional = false)
     private Tour tour;
     @JoinColumn(name = "receptionist", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = true)
     private User receptionist;
     @OneToMany(mappedBy = "booking")
     private Collection<Ticket> ticketCollection;
@@ -76,8 +81,11 @@ public class Booking implements Serializable {
     public Booking() {
     }
 
-    public Booking(Integer id) {
-        this.id = id;
+    public Booking(String notes, Customer customer, Tour tour) {
+        this.notes = notes;
+        this.createdAt = new Date();
+        this.customer = customer;
+        this.tour = tour;
     }
 
     public String getStatus() {
@@ -118,14 +126,6 @@ public class Booking implements Serializable {
 
     public void setCustomer(Customer customer) {
         this.customer = customer;
-    }
-
-    public Tour getTour() {
-        return tour;
-    }
-
-    public void setTour(Tour tour) {
-        this.tour = tour;
     }
 
     public User getReceptionist() {
@@ -186,5 +186,5 @@ public class Booking implements Serializable {
     public String toString() {
         return "com.lpthinh.pojo.Booking[ id=" + id + " ]";
     }
-    
+
 }

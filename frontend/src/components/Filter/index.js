@@ -1,11 +1,15 @@
 import React, { useState } from 'react';
 import './filter.scss';
 import { Button, Col, Container, Dropdown, Row } from 'react-bootstrap';
-import { tourcat, destination } from '~/data/category';
-import { tour } from '~/data/tour';
 import { useNavigate } from 'react-router-dom';
+import useFetch from '~/hooks/useFetch';
+import config from '~/config';
+import { useSelector } from 'react-redux';
+import { commonSelector } from '~/redux/selectors';
 
 const Filter = () => {
+      const { tours, destinationsFilter, categories } = useSelector(commonSelector);
+
       const [selectedDest, setSelectedDest] = useState('Where To');
       const [selectedMonth, setSelectedMonth] = useState('Select Month');
       const [selectedTravel, setSelectedTravel] = useState('Travel Type');
@@ -28,9 +32,9 @@ const Filter = () => {
 
       const navigate = useNavigate();
 
-      const capitalizedtour = tourcat.map((cat) => cat.charAt(0).toUpperCase() + cat.slice(1));
-      const capitalizeddest = destination.map((cat) => cat.charAt(0).toUpperCase() + cat.slice(1));
-      const capitalizedMonth = month.map((cat) => cat.charAt(0).toUpperCase() + cat.slice(1));
+      // const capitalizedtour = categories.map((cat) => cat.name);
+      // const capitalizeddest = destinations.map((cat) => cat.name);
+      // const capitalizedMonth = month.map((cat) => cat.charAt(0).toUpperCase() + cat.slice(1));
 
       const handleDestination = (e) => {
             setSelectedDest(e.target.innerText);
@@ -44,22 +48,19 @@ const Filter = () => {
             setSelectedTravel(e.target.innerText);
       };
 
-      const filteredTour = tour.filter((item) => {
-            const month = item.month.checkin.split(' ')[0];
+      const filteredTour = tours.filter((item) => {
             return (
                   item.name.toLowerCase().includes(selectedDest.toLowerCase()) ||
-                  month.toLowerCase().includes(selectedMonth.toLowerCase()) ||
-                  item.category.some((cat) => cat.toLowerCase().includes(selectedTravel.toLowerCase()))
+                  item.categoryCollection.some((cat) => cat.name.toLowerCase().includes(selectedTravel.toLowerCase()))
             );
       });
 
-      // console.log(filteredTour);
       const handleClick = () => {
             navigate('/tour-filter', {
                   state: {
                         filteredTour: filteredTour,
                         destination: selectedDest,
-                        month: selectedMonth,
+                        // month: selectedMonth,
                         type: selectedTravel,
                   },
             });
@@ -77,30 +78,11 @@ const Filter = () => {
 
                                     <Dropdown.Menu>
                                           <Dropdown.Item onClick={(e) => handleDestination(e)}>Where To</Dropdown.Item>
-                                          {capitalizeddest.map((item, index) => (
+                                          {destinationsFilter.map((item, index) => (
                                                 <Dropdown.Item key={index} onClick={(e) => handleDestination(e)}>
                                                       {item}
                                                 </Dropdown.Item>
                                           ))}
-                                    </Dropdown.Menu>
-                              </Dropdown>
-                        </Col>
-                        <Col>
-                              <i className="bi bi-calendar-week"></i>
-                              <Dropdown>
-                                    <Dropdown.Toggle variant="success" id="dropdown-basic">
-                                          {selectedMonth}
-                                    </Dropdown.Toggle>
-
-                                    <Dropdown.Menu>
-                                          <Dropdown.Item onClick={(e) => handleMonth(e)}>Select Month</Dropdown.Item>
-                                          {capitalizedMonth.map((item, index) => (
-                                                <Dropdown.Item key={index} onClick={(e) => handleMonth(e)}>
-                                                      {item}
-                                                </Dropdown.Item>
-                                          ))}
-
-                                          {/* <Drop category={month} callbackMonth={callbackMonth}/> */}
                                     </Dropdown.Menu>
                               </Dropdown>
                         </Col>
@@ -112,15 +94,12 @@ const Filter = () => {
                                     </Dropdown.Toggle>
 
                                     <Dropdown.Menu>
-                                          {/* <Dropdown.Item href="#/action-1">Travel Type</Dropdown.Item> */}
                                           <Dropdown.Item onClick={(e) => handleTravel(e)}>Travel Type</Dropdown.Item>
-                                          {capitalizedtour.map((item, index) => (
+                                          {categories.map((item, index) => (
                                                 <Dropdown.Item key={index} onClick={(e) => handleTravel(e)}>
                                                       {item}
                                                 </Dropdown.Item>
                                           ))}
-
-                                          {/* <Drop category={tourcat}/> */}
                                     </Dropdown.Menu>
                               </Dropdown>
                         </Col>

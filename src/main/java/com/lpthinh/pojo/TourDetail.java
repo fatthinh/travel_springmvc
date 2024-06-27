@@ -6,7 +6,6 @@ package com.lpthinh.pojo;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
-import java.lang.reflect.Array;
 import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -77,18 +76,18 @@ public class TourDetail implements Serializable {
         @JoinColumn(name = "tour_detail_id", referencedColumnName = "id")}, inverseJoinColumns = {
         @JoinColumn(name = "category_id", referencedColumnName = "id")})
     @ManyToMany
-    @JsonIgnore
+//    @JsonIgnore
     @LazyCollection(LazyCollectionOption.FALSE)
     private Collection<Category> categoryCollection;
     @JoinTable(name = "tour_image", joinColumns = {
         @JoinColumn(name = "tour_detail_id", referencedColumnName = "id")}, inverseJoinColumns = {
         @JoinColumn(name = "image_id", referencedColumnName = "id")})
     @ManyToMany
-    @JsonIgnore
+//    @JsonIgnore
     @LazyCollection(LazyCollectionOption.FALSE)
     private Collection<Image> imageCollection;
     @OneToMany(mappedBy = "tourId", fetch = FetchType.EAGER)
-    @JsonIgnore
+//    @JsonIgnore
     private Collection<TourActivity> tourActivityCollection;
     @JoinColumn(name = "destination", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.EAGER)

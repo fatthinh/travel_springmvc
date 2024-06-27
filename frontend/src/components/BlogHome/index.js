@@ -2,9 +2,9 @@ import React from 'react';
 import './bloghome.scss';
 import { Col, Container, Row } from 'react-bootstrap';
 import { blog } from '~/data/blogs';
-import { LinkContainer } from 'react-router-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
+import { Link } from 'react-router-dom';
 
 const BlogHome = () => {
       const blogs = blog.slice(0, 3);
@@ -20,11 +20,9 @@ const BlogHome = () => {
                                           </div>
                                           <div className="text ">
                                                 <h5 className="mb-3">{item.title}</h5>
-                                                <LinkContainer to={`/blogs/${item.id}`}>
-                                                      <a className="">
-                                                            Continue Reading <FontAwesomeIcon icon={faArrowRight}/>
-                                                      </a>
-                                                </LinkContainer>
+                                                <Link to={`/blogs/${item.id}`}>
+                                                      Continue Reading <FontAwesomeIcon icon={faArrowRight} />
+                                                </Link>
                                           </div>
                                     </Col>
                               ))}

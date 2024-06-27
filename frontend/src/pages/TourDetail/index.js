@@ -9,14 +9,16 @@ import Booking from '~/components/TourDetail/Booking';
 import PageBanner from '~/components/PageBanner';
 import useFetch from '~/hooks/useFetch';
 import config from '~/config';
+import Checkout from '~/components/Checkout';
 
 const TourDetail = () => {
       const { id } = useParams();
+      const [checkoutVisible, setCheckoutVisible] = useState(false);
 
-      const { data: tourDetails } = useFetch(`${config.BASE_URL}/tour-detail/${id}/`);
-      const { data: tourPlan } = useFetch(`${config.BASE_URL}/tour-detail/${id}/activities/`);
-      const { data: tourGallery } = useFetch(`${config.BASE_URL}/tour-detail/${id}/gallery/`);
-      const { data: tourAvailable } = useFetch(`${config.BASE_URL}/tour-detail/${id}/available/`);
+      const { data: tourDetails } = useFetch(`${config.BASE_URL}/${config.endpoints['tour-detail-retrieve'](id)}`);
+      const { data: tourPlan } = useFetch(`${config.BASE_URL}/${config.endpoints['tour-detail-activities'](id)}`);
+      const { data: tourGallery } = useFetch(`${config.BASE_URL}/${config.endpoints['tour-detail-gallery'](id)}`);
+      const { data: tourAvailable } = useFetch(`${config.BASE_URL}/${config.endpoints['tour-detail-available'](id)}`);
 
       return (
             <section>
@@ -25,28 +27,32 @@ const TourDetail = () => {
                         <Container>
                               <Row>
                                     <Col lg={8}>
-                                          <section className="single__bio">
-                                                <Tabs
-                                                      defaultActiveKey="home"
-                                                      id="justify-tab-example"
-                                                      className="mb-3"
-                                                      justify
-                                                >
-                                                      <Tab eventKey="home" title="Information">
-                                                            <TourInfo
-                                                                  tourdetails={tourDetails}
-                                                                  tourplan={tourPlan}
-                                                                  tourGallery={tourGallery}
-                                                            />
-                                                      </Tab>
-                                                      <Tab eventKey="profile" title="Tour Plan">
-                                                            <TourPlan tourPlan={tourPlan} />
-                                                      </Tab>
-                                                      <Tab eventKey="longer-tab" title="Gallery">
-                                                            <TourGallery gallery={tourGallery} />
-                                                      </Tab>
-                                                </Tabs>
-                                          </section>
+                                          {checkoutVisible ? (
+                                                <Checkout />
+                                          ) : (
+                                                <section className="single__bio">
+                                                      <Tabs
+                                                            defaultActiveKey="home"
+                                                            id="justify-tab-example"
+                                                            className="mb-3"
+                                                            justify
+                                                      >
+                                                            <Tab eventKey="home" title="Information">
+                                                                  <TourInfo
+                                                                        tourdetails={tourDetails}
+                                                                        tourplan={tourPlan}
+                                                                        tourGallery={tourGallery}
+                                                                  />
+                                                            </Tab>
+                                                            <Tab eventKey="profile" title="Tour Plan">
+                                                                  <TourPlan tourPlan={tourPlan} />
+                                                            </Tab>
+                                                            <Tab eventKey="longer-tab" title="Gallery">
+                                                                  <TourGallery gallery={tourGallery} />
+                                                            </Tab>
+                                                      </Tabs>
+                                                </section>
+                                          )}
                                     </Col>
 
                                     <Col lg={4}>
@@ -54,6 +60,8 @@ const TourDetail = () => {
                                                 tourdetails={tourDetails}
                                                 tourAvailable={tourAvailable}
                                                 tourPlan={tourPlan}
+                                                checkoutVisible={checkoutVisible}
+                                                toggleCheckoutVisible={() => setCheckoutVisible((current) => !current)}
                                           />
                                     </Col>
                               </Row>

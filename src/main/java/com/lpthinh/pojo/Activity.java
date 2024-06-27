@@ -41,6 +41,10 @@ import javax.xml.bind.annotation.XmlTransient;
 public class Activity implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    public static final String PLANE = "PLANE";
+    public static final String LIMOUSINE = "LIMOUSINE";
+    public static final String FERRY = "FERRY";
+
     @Lob
     @Size(max = 65535)
     @Column(name = "description")
@@ -161,5 +165,5 @@ public class Activity implements Serializable {
     public String toString() {
         return "com.lpthinh.pojo.Activity[ id=" + id + " ]";
     }
-    
+
 }

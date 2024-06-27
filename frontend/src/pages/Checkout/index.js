@@ -2,15 +2,148 @@ import { Card, Col, Container, Row } from 'react-bootstrap';
 import PageBanner from '~/components/PageBanner';
 import './checkout.scss';
 import { useLocation, useNavigate } from 'react-router-dom';
-import images from '~/assets/images';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faLocationDot } from '@fortawesome/free-solid-svg-icons';
+import { faLocationDot, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { useState, useEffect } from 'react';
+import { faTrashAlt } from '@fortawesome/free-regular-svg-icons';
 
 function Checkout() {
       const location = useLocation();
       const navigate = useNavigate();
+      const [bookingInfo, setBookingInfo] = useState({
+            firstName: '',
+            lastName: '',
+            phone: '',
+            email: '',
+            address: '',
+            notes: '',
+      });
+      const [adult, setAdult] = useState(location.state.adult);
+      const [child, setChild] = useState(location.state.child);
+      const [tickets, setTickets] = useState([]);
 
-      console.log(location.state);
+      const onChangeBookingInfo = (event, field) => {
+            setBookingInfo((current) => {
+                  return { ...current, [field]: event.target.value };
+            });
+      };
+
+      const onBook = () => {
+            const tourId = location.state.selectedTour.id;
+            const booking = { ...bookingInfo, tickets, tourId };
+            console.log(booking);
+      };
+
+      const onChangeTicketInfo = (e, index, field) => {
+            const currentTickets = [...tickets];
+            currentTickets[index][field] = e.target.value;
+            setTickets(currentTickets);
+
+            console.log(tickets);
+      };
+
+      useEffect(() => {
+            const items = [];
+            for (let i = 0; i < adult; i++) {
+                  items.push({ name: '', dob: '', type: 1 });
+            }
+            for (let i = 0; i < child; i++) {
+                  items.push({ name: '', dob: '', type: 2 });
+            }
+            setTickets(items);
+      }, [adult, child]);
+
+      const renderAdults = () => {
+            let adults = [];
+            for (let i = 0; i < adult; i++) {
+                  adults.push(
+                        <Row key={i} className="mb-4">
+                              <Col lg={6}>
+                                    <div className="form-outline">
+                                          <input
+                                                type="text"
+                                                placeholder="Name"
+                                                className="form-control"
+                                                value={tickets[i]?.['name']}
+                                                onChange={(e) => onChangeTicketInfo(e, i, 'name')}
+                                          />
+                                    </div>
+                              </Col>
+                              <Col lg={5}>
+                                    <div className="form-outline">
+                                          <input
+                                                type="date"
+                                                placeholder="Date of birth"
+                                                className="form-control"
+                                                value={tickets[i]?.['dob']}
+                                                onChange={(e) => onChangeTicketInfo(e, i, 'dob')}
+                                          />
+                                    </div>
+                              </Col>
+                              <Col lg={1} className="p-0">
+                                    <button
+                                          className="btn w-100 btn-danger"
+                                          onClick={() =>
+                                                setAdult((current) => {
+                                                      return current === 1 ? current : current - 1;
+                                                })
+                                          }
+                                    >
+                                          <FontAwesomeIcon icon={faTrash} />
+                                    </button>
+                              </Col>
+                        </Row>,
+                  );
+            }
+
+            return adults;
+      };
+
+      const renderChildren = () => {
+            let children = [];
+            for (let i = adult; i < child + adult; i++) {
+                  children.push(
+                        <Row key={i} className="mb-4">
+                              <Col lg={6}>
+                                    <div className="form-outline">
+                                          <input
+                                                type="text"
+                                                placeholder="Name"
+                                                className="form-control"
+                                                value={tickets[i]?.['name']}
+                                                onChange={(e) => onChangeTicketInfo(e, i, 'name')}
+                                          />
+                                    </div>
+                              </Col>
+                              <Col lg={5}>
+                                    <div className="form-outline">
+                                          <input
+                                                type="date"
+                                                placeholder="Date of birth"
+                                                className="form-control"
+                                                value={tickets[i]?.['dob']}
+                                                onChange={(e) => onChangeTicketInfo(e, i, 'dob')}
+                                          />
+                                    </div>
+                              </Col>
+                              <Col lg={1} className="p-0">
+                                    <button
+                                          className="btn w-100 btn-danger"
+                                          onClick={() =>
+                                                setChild((current) => {
+                                                      return current === 1 ? current : current - 1;
+                                                })
+                                          }
+                                    >
+                                          <FontAwesomeIcon icon={faTrash} />
+                                    </button>
+                              </Col>
+                        </Row>,
+                  );
+            }
+
+            return children;
+      };
 
       return (
             <>
@@ -44,7 +177,7 @@ function Checkout() {
 
                                           <Card className="shadow-0 border">
                                                 <div className="p-4">
-                                                      <h5 className="card-title mb-3">Guest checkout</h5>
+                                                      <h5 className="card-title mb-3">Booking information</h5>
                                                       <Row>
                                                             <Col lg={6}>
                                                                   <p className="mb-0">First name</p>
@@ -54,6 +187,10 @@ function Checkout() {
                                                                               id="typeText"
                                                                               placeholder="Type here"
                                                                               className="form-control"
+                                                                              value={bookingInfo['firstName']}
+                                                                              onChange={(e) =>
+                                                                                    onChangeBookingInfo(e, 'firstName')
+                                                                              }
                                                                         />
                                                                   </div>
                                                             </Col>
@@ -66,6 +203,10 @@ function Checkout() {
                                                                               id="typeText"
                                                                               placeholder="Type here"
                                                                               className="form-control"
+                                                                              value={bookingInfo['lastName']}
+                                                                              onChange={(e) =>
+                                                                                    onChangeBookingInfo(e, 'lastName')
+                                                                              }
                                                                         />
                                                                   </div>
                                                             </Col>
@@ -76,8 +217,12 @@ function Checkout() {
                                                                         <input
                                                                               type="tel"
                                                                               id="typePhone"
-                                                                              //   value="+84"
                                                                               className="form-control"
+                                                                              placeholder="Phone number"
+                                                                              value={bookingInfo['phone']}
+                                                                              onChange={(e) =>
+                                                                                    onChangeBookingInfo(e, 'phone')
+                                                                              }
                                                                         />
                                                                   </div>
                                                             </Col>
@@ -91,13 +236,17 @@ function Checkout() {
                                                                               id="typeEmail"
                                                                               placeholder="example@gmail.com"
                                                                               className="form-control"
+                                                                              value={bookingInfo['email']}
+                                                                              onChange={(e) =>
+                                                                                    onChangeBookingInfo(e, 'email')
+                                                                              }
                                                                         />
                                                                   </div>
                                                             </Col>
                                                       </Row>
 
                                                       <Row>
-                                                            <div className="col-sm-8 mb-3">
+                                                            <div className="mb-3">
                                                                   <p className="mb-0">Address</p>
                                                                   <div className="form-outline">
                                                                         <input
@@ -105,59 +254,16 @@ function Checkout() {
                                                                               id="typeText"
                                                                               placeholder="Type here"
                                                                               className="form-control"
+                                                                              value={bookingInfo['address']}
+                                                                              onChange={(e) =>
+                                                                                    onChangeBookingInfo(e, 'address')
+                                                                              }
                                                                         />
                                                                   </div>
                                                             </div>
-
-                                                            <div className="col-sm-4 mb-3">
-                                                                  <p className="mb-0">City</p>
-                                                                  <select className="form-select">
-                                                                        <option value="1">New York</option>
-                                                                        <option value="2">Moscow</option>
-                                                                        <option value="3">Samarqand</option>
-                                                                  </select>
-                                                            </div>
                                                       </Row>
-                                                      {/* 
-                                                      <div className="form-check">
-                                                            <input
-                                                                  className="form-check-input"
-                                                                  type="checkbox"
-                                                                  value=""
-                                                                  id="flexCheckDefault"
-                                                            />
-                                                            <label className="form-check-label" htmlFor="flexCheckDefault">
-                                                                  Keep me up to date on news
-                                                            </label>
-                                                      </div> */}
 
                                                       <hr className="my-4" />
-
-                                                      <h5 className="card-title mb-3">Other Extra Services</h5>
-
-                                                      <Row>
-                                                            <Col lg={4} className="mb-3">
-                                                                  <div className="form-check h-100 border rounded-3">
-                                                                        <div className="p-3">
-                                                                              <input
-                                                                                    className="form-check-input"
-                                                                                    type="checkbox"
-                                                                                    name="flexRadioDefault"
-                                                                                    id="flexRadioDefault1"
-                                                                              />
-                                                                              <label
-                                                                                    className="form-check-label"
-                                                                                    htmlFor="flexRadioDefault1"
-                                                                              >
-                                                                                    Pick-up and drop-off <br />
-                                                                                    <small className="text-muted">
-                                                                                          $80
-                                                                                    </small>
-                                                                              </label>
-                                                                        </div>
-                                                                  </div>
-                                                            </Col>
-                                                      </Row>
 
                                                       <div className="mb-3">
                                                             <p className="mb-0">Note</p>
@@ -166,13 +272,23 @@ function Checkout() {
                                                                         className="form-control"
                                                                         id="textAreaExample1"
                                                                         rows="2"
+                                                                        placeholder="Note here...."
+                                                                        value={bookingInfo['notes']}
+                                                                        onChange={(e) =>
+                                                                              onChangeBookingInfo(e, 'notes')
+                                                                        }
                                                                   ></textarea>
                                                             </div>
                                                       </div>
 
+                                                      <h6 className="card-title mb-3">Adults</h6>
+                                                      {renderAdults()}
+                                                      <h6 className="card-title mb-3">Children</h6>
+                                                      {renderChildren()}
+
                                                       <div className="float-end">
                                                             <button
-                                                                  className="btn btn-light border"
+                                                                  className="btn btn-light border px-4 py-2"
                                                                   onClick={() => {
                                                                         navigate(-1);
                                                                   }}
@@ -180,8 +296,11 @@ function Checkout() {
                                                                   Cancel
                                                             </button>
                                                             <span className="mx-1"></span>
-                                                            <button className="btn btn-success shadow-0 border">
-                                                                  Place Order
+                                                            <button
+                                                                  className="btn btn-primary shadow-0 border px-4 py-2"
+                                                                  onClick={onBook}
+                                                            >
+                                                                  Book
                                                             </button>
                                                       </div>
                                                 </div>
@@ -191,18 +310,18 @@ function Checkout() {
                                           <div className="ms-lg-4 mt-4 mt-lg-0" style={{ maxWidth: 320 }}>
                                                 <h6 className="mb-3">Summary</h6>
                                                 <div className="d-flex justify-content-between">
-                                                      <p className="mb-2">Adults (x{location.state.adult}):</p>
+                                                      <p className="mb-2">Adults (x{adult}):</p>
                                                       <p className="mb-2">
-                                                            ${location.state.adult * location.state.tourdetails.price}
+                                                            ${adult * location.state.tourdetails.price}
                                                       </p>
                                                 </div>
                                                 <div className="d-flex justify-content-between">
-                                                      <p className="mb-2">Children (x{location.state.child}):</p>
+                                                      <p className="mb-2">Children (x{child}):</p>
                                                       <p className="mb-2">
                                                             $
                                                             {location.state.child *
                                                                   location.state.tourdetails.price *
-                                                                  0.3}
+                                                                  (1 - location.state.ticketTypes[1].deduction)}
                                                       </p>
                                                 </div>
 
@@ -228,6 +347,7 @@ function Checkout() {
                                                                                     name="paymentMethod"
                                                                                     id="paymentMethod1"
                                                                                     value="cash"
+                                                                                    defaultChecked
                                                                               />
                                                                               <label
                                                                                     className="form-check-label"
@@ -265,7 +385,7 @@ function Checkout() {
                                                 <div className="d-flex align-items-center mb-4">
                                                       <div className="me-3 position-relative">
                                                             <img
-                                                                  src={images.logo}
+                                                                  src={location.state.tourdetails.thumbnail}
                                                                   style={{ height: 96, width: 96 }}
                                                                   className="img-sm rounded border"
                                                             />

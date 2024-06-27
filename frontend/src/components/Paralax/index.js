@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button, Container } from 'react-bootstrap';
-import { LinkContainer } from 'react-router-bootstrap';
+import { Link } from 'react-router-dom';
 
 const Parralax = () => {
       return (
@@ -15,14 +15,14 @@ const Parralax = () => {
                                           tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim.
                                           Exercitation ullam laboris nisi ut aliquip ex ea commodo consequat.
                                     </p>
-                                    <LinkContainer to={'/tours'}>
+                                    <Link to={'/tours'}>
                                           <Button className="find__now ">
                                                 <div>
                                                       <span className="transition" />
                                                       <span className="label">Find Now</span>
                                                 </div>
                                           </Button>
-                                    </LinkContainer>
+                                    </Link>
                               </div>
                         </Container>
                   </div>

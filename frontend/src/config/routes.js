@@ -7,6 +7,8 @@ const routes = {
       destinationList: '/destinations',
       blogs: '/blogs',
       checkout: '/checkout',
+      register: '/register',
+      profile: '/profile',
 };
 
 export default routes;
